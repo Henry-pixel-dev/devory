@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { Lora } from "next/font/google";
+import { Lora, Archivo_Black } from "next/font/google";
 import "./globals.css";
-
+import Navbar from "@/components/NavBar";
 
 const lora = Lora({
   variable: "--font-lora",
   subsets: ["latin"],
+});
+
+const archivo = Archivo_Black({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-archivo-black",
 });
 
 export const metadata: Metadata = {
@@ -17,9 +23,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${lora.variable} h-full antialiased`}
+      className={`${lora.variable} h-full antialiased ${archivo.variable}`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }
