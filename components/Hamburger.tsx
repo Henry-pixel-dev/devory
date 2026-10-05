@@ -2,8 +2,8 @@
 
 import { FaBars, FaTimes  } from "react-icons/fa";
 import { useState } from "react";
-import SignInBtn from "./SIgnInBtn";
-import SignUpBtn from "./SignUpBtn";
+import LoginBtn from "./LoginBtn";
+
 
 export default function Hamburger() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,8 +17,8 @@ export default function Hamburger() {
         </button>
         {isOpen && (
             <div className="absolute top-full left-0  bg-white border border-gray-200 rounded-lg shadow-lg p-4 w-full min-h-screen z-50 flex flex-col space-y-2">
-                <SignInBtn />
-                <SignUpBtn />
+                <LoginBtn href="/signin" size="sm">Sign In</LoginBtn>
+                <LoginBtn href="/signup" size="sm">Sign Up</LoginBtn>
             </div>
         )}
     </div>
