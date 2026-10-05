@@ -36,7 +36,7 @@ const bubble =
 
 export default function FeatureCards() {
   return (
-    <div className="mx-auto mt-10 grid max-w-275 gap-5 grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
+    <div className="mx-auto mt-10  max-w-275 flex flex-col items-center justify-center space-y-6 md:mt-20 md:max-w-7xl md:flex-row md:space-x-6 md:space-y-0">
       {cards.map((c) => (
         <div
           key={c.title}

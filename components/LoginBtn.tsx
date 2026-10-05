@@ -9,12 +9,12 @@ type ButtonProps = {
 
 
 const baseClasses =
-  "font-bold text-center rounded transition duration-300  ";
+  "font-bold text-center  transition duration-300  ";
 
 const sizes = {
-  sm: "px-4 py-2",
+  sm: "px-4 py-2 rounded",
   md: "px-4 py-4 text-base",
-  lg: "px-6 py-4 text-lg  flex-1 border",
+  lg: "px-6 py-4 text-lg  flex-1 rounded-xl ",
 };
 
 const variants = {

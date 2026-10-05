@@ -65,6 +65,25 @@ export default function LandingPage() {
         </h2>
         <FeatureCards />
       </section>
+
+      {/* product overview */}
+
+      {/* cta */}
+      <section className="flex flex-col items-center justify-center  space-y-4 p-6 md:p-12">
+        <h2 className="text-center md:text-start max-w-4xl text-2xl md:text-4xl  text-primary font-display">
+          Ready to streamline your learning process?
+        </h2>
+        <p className="text-lg text-gray-600">
+          Join thousands of developers who are already using our platform to organize their learning resources.
+        </p>
+        <LoginBtn href="/signup" size="lg" variant="primary">
+          Get Started
+        </LoginBtn>
+      </section>
+
+
+      {/* footer */}
+    
     </main>
   )
 }
