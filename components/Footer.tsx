@@ -4,15 +4,15 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="flex flex-col items-center justify-center space-y-4 p-6 md:flex-row md:justify-between md:space-y-0 md:p-12 border-t md:space-x-32 border-primary/50">
-        <div className="flex flex-col items-center justify-center space-y-3 md:items-start">
+    <footer className=" flex flex-col items-center justify-center space-y-4 p-6 md:flex-row md:justify-between md:space-y-0 md:p-12 border-t md:space-x-32 border-primary/50 md:items-start">
+        <div className="flex flex-col items-center justify-center space-y-6 md:items-start ">
             <div className="flex items-end space-x-2">
                 <Image src="/Dlogo.png" alt="Logo" width={50} height={50} />
                 <p className="text-3xl font-bold text-primary font-display">
                     Devory
                 </p>
             </div>
-            <div className="flex space-x-3 items-center">
+            <div className="w-full flex space-x-3 items-center justify-center text-center">
                 <Link href="https://twitter.com/DevoryApp" target="_blank" rel="noopener noreferrer">
                     <FaXTwitter className="text-2xl text-primary hover:text-primary/80 transition duration-300" />
                 </Link>
@@ -26,7 +26,7 @@ export default function Footer() {
         </div>
 
         {/* second column */}
-        <div className="w-full flex flex-col space-y-6 md:flex-row md:space-y-0 md:justify-around items-start">
+        <div className=" w-full flex flex-col space-y-6 md:flex-row md:space-y-0 md:justify-around items-start">
             <div className="w-full flex flex-col items-center justify-center space-y-3 md:items-start">
                 <h3 className="text-lg font-bold text-primary">Products</h3>
                 <ul className="flex flex-col items-center justify-center space-y-2 md:items-start">
