@@ -10,6 +10,8 @@
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
   --color-primary-foreground: var(--primary-foreground);
+  --color-tertiary: var(--tertiary);
+  --color-tertiary-foreground: var(--tertiary-foreground);
   --font-display: var(--font-archivo-black);
 }
 
@@ -20,6 +22,8 @@
 --secondary: #dddbff;
 --accent: #9f9cf2;
 --primary-foreground: #fbfbfe;
+--tertiary: #8B949E;
+--tertiary-foreground: #57606A;
 }
 
 
@@ -30,6 +34,8 @@
 --secondary: #020024;
 --accent: #100d63;
 --primary-foreground: #010104;
+--tertiary: #6E7681;
+--tertiary-foreground: #8B949E;
 }
 
 

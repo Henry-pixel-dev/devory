@@ -7,7 +7,7 @@ import Hamburger from "./Hamburger";
 
 export default function NavBar() {
   return (
-    <nav className="relative w-full flex justify-between border-b border-primary/50 py-2 px-6">
+    <nav className="sticky top-0 z-50 bg-background/50 w-full flex justify-between border-b border-primary/50 py-2 px-6">
         <Link href="/" className="flex items-end space-x-2">
             <Image
                 src={dlogo}
