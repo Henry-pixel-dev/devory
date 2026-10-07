@@ -1,4 +1,11 @@
+"use client";
+
+import Button from "@/components/Button";
+import Input from "@/components/Input";
+import LoginBtn from "@/components/LoginBtn";
 import Link from "next/link";
+import Image from "next/image";
+import Dlogo from "../../public/Dlogo.png";
 
 
 
@@ -7,7 +14,7 @@ export default function Signup() {
   return (
     <main className="w-full min-h-screen flex flex-col items-center justify-center md:flex-row md:justify-between md:items-start md:gap-10">
         {/* the form */}
-            <section className="relative isolate flex min-h-[calc(100vh-57px)] items-center justify-center overflow-hidden bg-background px-6 py-16 ">
+            <section className="flex-1 relative isolate flex min-h-[calc(100vh-57px)] items-center justify-center overflow-hidden bg-background md:pr-16 py-6 ">
               {/* Paper grain texture */}
               <div
                 aria-hidden="true"
@@ -27,31 +34,99 @@ export default function Signup() {
                 className="w-full max-w-104"
               >
                 {/* Card */}
-                <div className="rounded-2xl border border-light-border bg-light-surface p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] sm:p-10 ">
+                <div className="rounded-2xl border border-primary bg-background p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] sm:p-10 ">
+                  <div
+                    className="mb-8 flex flex-col items-center gap-5"
+                  >
+                     <Link href="/" className="flex items-end space-x-2">
+                        <Image
+                            src={Dlogo}
+                            alt="Logo"
+                            width={50}
+                            height={50}
+                            placeholder="blur"
+                            quality={70}
+                        />
+                        <p className="text-2xl font-bold text-primary font-display">
+                            Devory
+                        </p>
+                    </Link>
+
+                    <div className="text-center">
+                      <h1 className="font-serif text-2xl tracking-[-0.02em] text-primary ">
+                        Create your account
+                      </h1>
+                      <p className="mt-1.5 font-sans text-sm text-accent ">
+                        Start building your personalised ecosystem.
+                      </p>
+                    </div>
+                  </div>
 
 
                   {/* Form */}
                   <form className="flex flex-col gap-5"
                   >
+                    {/* email */}
+                    <Input
+                      id="email"
+                      name="email"
+                      label="Email"
+                      type="email"
+                      placeholder="@example.com"
+                      value=""
+                      onChange={() => {}}
+                    />
+
+                    {/* password  */}
+                    <Input
+                      id="password"
+                      name="password"
+                      label="Password"
+                      type="password"
+                      placeholder="Enter your password"
+                      value=""
+                      onChange={() => {}}
+                    />
+
+                    {/* confirm password  */}
+                    <Input
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      label="Confirm Password"
+                      type="password"
+                      placeholder="Confirm your password"
+                      value=""
+                      onChange={() => {}}
+                    />
+
+                    {/* button submit */}
+                    <Button />
                     
                   </form>
 
                   {/* Divider */}
-                  <p
+                  <div
                     className="my-6 flex items-center gap-4"
                   >
-                    <div className="h-px flex-1 bg-light-border " />
-                    <span className="font-sans text-xs text-light-text-tertiary dark:text-dark-text-tertiary">
+                    <div className="h-px flex-1 bg-primary/50 " />
+                    <span className="font-sans text-xs  ">
                       or
                     </span>
-                    <div className="h-px flex-1 bg-light-border " />
-                  </p>
+                    <div className="h-px flex-1 bg-primary/50 " />
+                  </div>
 
                   {/* Sign in link */}
                   <p
-                    className="text-center font-sans text-sm text-light-text-secondary dark:text-dark-text-secondary"
+                    className="text-center font-sans text-sm  text-accent"
                   >
                     Already have an account?{' '}
+
+                    <Link
+                      href="/signin"
+                      className="font-medium text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/50 hover:decoration-primary/20"
+                    >
+                      Sign in
+                    </Link>
                     
                   </p>
                 </div>
@@ -59,7 +134,7 @@ export default function Signup() {
                 {/* Footer note */}
                 <p
                   
-                  className="mt-6 text-center font-sans text-xs leading-relaxed text-light-text-tertiary dark:text-dark-text-tertiary"
+                  className="mt-6 text-center font-sans text-xs leading-relaxed text-tertiary "
                 >
                   By creating an account you agree to our Terms of Service and Privacy Policy.
                 </p>
@@ -67,7 +142,7 @@ export default function Signup() {
             </section>
 
         {/* video section */}
-        <div className="flex-1 hidden md:flex rounded-lg overflow-hidden  h-full ">
+        <div className="flex-1 hidden md:flex rounded-lg overflow-hidden  h-screen">
           <video
             src="/hero.mp4"
             autoPlay
