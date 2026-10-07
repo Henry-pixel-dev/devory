@@ -7,7 +7,7 @@ import Hamburger from "./Hamburger";
 
 export default function NavBar() {
   return (
-    <nav className="sticky top-0 z-50 bg-background/50 w-full flex justify-between border-b border-primary/50 py-2 px-6">
+    <nav className="sticky top-0 z-50 bg-background/80 w-full flex justify-between border-b border-primary/50 py-2 px-6">
         <Link href="/" className="flex items-end space-x-2">
             <Image
                 src={dlogo}
@@ -23,7 +23,7 @@ export default function NavBar() {
         </Link>
         
         <div className=" space-x-3 items-center hidden md:flex">
-            <LoginBtn href="/login" size="sm" variant="primary">
+            <LoginBtn href="/signin" size="sm" variant="primary">
                 Sign In
             </LoginBtn>
             <LoginBtn href="/signup" size="sm" variant="inverse">
