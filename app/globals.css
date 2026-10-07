@@ -12,6 +12,8 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-tertiary: var(--tertiary);
   --color-tertiary-foreground: var(--tertiary-foreground);
+  --color-light-error: var(--light-error);
+  --color-light-border: var(--light-border)
   --font-display: var(--font-archivo-black);
 }
 
@@ -24,6 +26,8 @@
 --primary-foreground: #fbfbfe;
 --tertiary: #8B949E;
 --tertiary-foreground: #57606A;
+--light-error: #DC2626;
+--light-border: #E1E4E8;
 }
 
 
@@ -36,6 +40,8 @@
 --primary-foreground: #010104;
 --tertiary: #6E7681;
 --tertiary-foreground: #8B949E;
+--light-error: #F85149;
+--light-border: #30363D;
 }
 
 

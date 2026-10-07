@@ -14,11 +14,11 @@ type InputProps = {
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  error?: string;
+  errors?: string;
 };
 
 export default function Input({
-  id, name, label, type = "text", placeholder, value, onChange, error,
+  id, name, label, type = "text", placeholder, value, onChange, errors,
 }: InputProps) {
 
 
@@ -55,7 +55,7 @@ export default function Input({
 
           }
       </div>
-      {error && <p className="text-sm text-error">{error}</p>}
+      {errors && <p className="text-sm  text-light-error text-error">{errors}</p>}
     </div>
   );
 }

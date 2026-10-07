@@ -1,8 +1,7 @@
 "use client";
 
-import Button from "@/components/Button";
+import Button from "@/components/SubmitButton";
 import Input from "@/components/Input";
-import LoginBtn from "@/components/LoginBtn";
 import Link from "next/link";
 import Image from "next/image";
 import Dlogo from "../../public/Dlogo.png";
@@ -91,7 +90,9 @@ export default function Signin() {
                     
                     
                     {/* button submit */}
-                    <Button />
+                    <Button >
+                        Sign in
+                    </Button>
                     
                   </form>
 

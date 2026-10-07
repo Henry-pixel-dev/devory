@@ -1,20 +1,20 @@
-"use client";
-
-import Button from "@/components/Button";
-import Input from "@/components/Input";
-import LoginBtn from "@/components/LoginBtn";
 import Link from "next/link";
 import Image from "next/image";
 import Dlogo from "../../public/Dlogo.png";
+import SignupForm from "./SignupForm";
+
 
 
 
 
 export default function Signup() {
+  
+
+
   return (
     <main className="w-full min-h-screen flex flex-col items-center justify-center md:flex-row md:justify-between md:items-start md:gap-10">
-        {/* the form */}
-            <section className="flex-1 relative isolate flex min-h-[calc(100vh-57px)] items-center justify-center overflow-hidden bg-background md:pr-16 py-6 ">
+      
+          <section className="flex-1 relative isolate flex min-h-[calc(100vh-57px)] items-center justify-center overflow-hidden bg-background md:pr-16 py-6 ">
               {/* Paper grain texture */}
               <div
                 aria-hidden="true"
@@ -64,45 +64,7 @@ export default function Signup() {
 
 
                   {/* Form */}
-                  <form className="flex flex-col gap-5"
-                  >
-                    {/* email */}
-                    <Input
-                      id="email"
-                      name="email"
-                      label="Email"
-                      type="email"
-                      placeholder="@example.com"
-                      value=""
-                      onChange={() => {}}
-                    />
-
-                    {/* password  */}
-                    <Input
-                      id="password"
-                      name="password"
-                      label="Password"
-                      type="password"
-                      placeholder="Enter your password"
-                      value=""
-                      onChange={() => {}}
-                    />
-
-                    {/* confirm password  */}
-                    <Input
-                      id="confirmPassword"
-                      name="confirmPassword"
-                      label="Confirm Password"
-                      type="password"
-                      placeholder="Confirm your password"
-                      value=""
-                      onChange={() => {}}
-                    />
-
-                    {/* button submit */}
-                    <Button />
-                    
-                  </form>
+                  <SignupForm/>
 
                   {/* Divider */}
                   <div
