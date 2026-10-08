@@ -34,63 +34,61 @@ export default function Signup() {
                 className="w-full max-w-104"
               >
                 {/* Card */}
-                <div className="rounded-2xl border border-primary bg-background p-8 shadow-[0_1px_3px_rgba(0,0,0,0.04)] sm:p-10 ">
-                  <div
-                    className="mb-8 flex flex-col items-center gap-5"
-                  >
-                     <Link href="/" className="flex items-end space-x-2">
-                        <Image
-                            src={Dlogo}
-                            alt="Logo"
-                            width={50}
-                            height={50}
-                            placeholder="blur"
-                            quality={70}
-                        />
-                        <p className="text-2xl font-bold text-primary font-display">
-                            Devory
-                        </p>
-                    </Link>
-
-                    <div className="text-center">
-                      <h1 className="font-serif text-2xl tracking-[-0.02em] text-primary ">
-                        Create your account
-                      </h1>
-                      <p className="mt-1.5 font-sans text-sm text-accent ">
-                        Start building your personalised ecosystem.
-                      </p>
-                    </div>
-                  </div>
-
-
-                  {/* Form */}
-                  <SignupForm/>
-
-                  {/* Divider */}
-                  <div
-                    className="my-6 flex items-center gap-4"
-                  >
-                    <div className="h-px flex-1 bg-primary/50 " />
-                    <span className="font-sans text-xs  ">
-                      or
-                    </span>
-                    <div className="h-px flex-1 bg-primary/50 " />
-                  </div>
-
-                  {/* Sign in link */}
-                  <p
-                    className="text-center font-sans text-sm  text-accent"
-                  >
-                    Already have an account?{' '}
-
-                    <Link
-                      href="/signin"
-                      className="font-medium text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/50 hover:decoration-primary/20"
-                    >
-                      Sign in
-                    </Link>
+                <div className="rounded-4xl border-2 border-primary bg-background shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
+                  <div className="w-32 h-8 rounded-4xl bg-primary mx-auto mt-5"></div>
+                  <div className="p-8  sm:p-10 ">
                     
-                  </p>
+                    <div
+                      className="mb-8 flex flex-col items-center gap-5"
+                    >
+                       <Link href="/" className="flex items-end space-x-2">
+                          <Image
+                              src={Dlogo}
+                              alt="Logo"
+                              width={50}
+                              height={50}
+                              placeholder="blur"
+                              quality={70}
+                          />
+                          <p className="text-2xl font-bold text-primary font-display">
+                              Devory
+                          </p>
+                      </Link>
+                      <div className="text-center">
+                        <h1 className="font-serif text-2xl tracking-[-0.02em] text-primary ">
+                          Create your account
+                        </h1>
+                        <p className="mt-1.5 font-sans text-sm text-accent ">
+                          Start building your personalised ecosystem.
+                        </p>
+                      </div>
+                    </div>
+                    {/* Form */}
+                    <SignupForm/>
+                    {/* Divider */}
+                    <div
+                      className="my-6 flex items-center gap-4"
+                    >
+                      <div className="h-px flex-1 bg-primary/50 " />
+                      <span className="font-sans text-xs  ">
+                        or
+                      </span>
+                      <div className="h-px flex-1 bg-primary/50 " />
+                    </div>
+                    {/* Sign in link */}
+                    <p
+                      className="text-center font-sans text-sm  text-accent"
+                    >
+                      Already have an account?{' '}
+                      <Link
+                        href="/signin"
+                        className="font-medium text-primary underline decoration-primary/30 underline-offset-2 transition-colors hover:text-primary/50 hover:decoration-primary/20"
+                      >
+                        Sign in
+                      </Link>
+                  
+                    </p>
+                  </div>
                 </div>
 
                 {/* Footer note */}
