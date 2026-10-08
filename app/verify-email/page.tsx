@@ -4,8 +4,9 @@ import { FaRegEnvelope } from 'react-icons/fa';
 import Dlogo from "../../public/Dlogo.png";
 
 
-export default function VerifyEmail() {
-    const email = location.state?.email || 'your email'
+export default async function VerifyEmail({ searchParams, }: {  searchParams: Promise<{ email?: string }>;}) {
+  const { email } = await searchParams
+    
   return (
     <section className="relative isolate flex min-h-[calc(100vh-57px)] items-center justify-center overflow-hidden bg-background px-6 py-16 ">
       {/* Paper grain texture */}
@@ -67,7 +68,7 @@ export default function VerifyEmail() {
             <p className="mt-2 max-w-xs font-sans text-sm leading-relaxed text-tertiary">
               We sent a confirmation link href{' '}
               <span className="font-medium text-light-accent dark:text-dark-accent">
-                {/* {email} */}
+                {email ?? "your email"}
               </span>
             </p>
           </div>

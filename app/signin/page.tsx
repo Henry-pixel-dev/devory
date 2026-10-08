@@ -1,10 +1,9 @@
-"use client";
 
-import Button from "@/components/SubmitButton";
-import Input from "@/components/Input";
+
 import Link from "next/link";
 import Image from "next/image";
 import Dlogo from "../../public/Dlogo.png";
+import SignInForm from "./SignInForm";
 
 
 
@@ -63,38 +62,7 @@ export default function Signin() {
 
 
                   {/* Form */}
-                  <form className="flex flex-col gap-5"
-                  >
-                    {/* email */}
-                    <Input
-                      id="email"
-                      name="email"
-                      label="Email"
-                      type="email"
-                      placeholder="@example.com"
-                      value=""
-                      onChange={() => {}}
-                    />
-
-                    {/* password  */}
-                    <Input
-                      id="password"
-                      name="password"
-                      label="Password"
-                      type="password"
-                      placeholder="Enter your password"
-                      value=""
-                      onChange={() => {}}
-                    />
-
-                    
-                    
-                    {/* button submit */}
-                    <Button >
-                        Sign in
-                    </Button>
-                    
-                  </form>
+                  <SignInForm/>
 
                   {/* Divider */}
                   <div

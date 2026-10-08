@@ -1,32 +1,30 @@
 "use client"
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import React, { useState } from "react"
 import Button from "@/components/SubmitButton";
 import Input from "@/components/Input";
 import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
 
 
 
-export default function SignupForm() {
+
+export default function SignInForm() {
     const router = useRouter();
 
-    type FormErrors = {
+  const [errors, setErrors] = useState<FormErrors>({})
+  const [apiError, setApiError] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  })
+
+  type FormErrors = {
         email?: string;
         password?: string;
-        confirmPassword?: string;
     }
 
-    const [errors, setErrors] = useState<FormErrors>({})
-    const [apiError, setApiError] = useState('')
-    const [loading, setLoading] = useState(false) 
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-        confirmPassword: '',
-    })
-
-    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
@@ -46,14 +44,6 @@ export default function SignupForm() {
             newErrors.password = 'Password must be at least 6 characters'
         }
 
-        if (!formData.confirmPassword) {
-            newErrors.confirmPassword = 'Please confirm your password'
-        } else if (formData.password !== formData.confirmPassword) {
-            newErrors.confirmPassword = 'Passwords do not match'
-        }
-
-        
-
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors)
             return
@@ -62,30 +52,28 @@ export default function SignupForm() {
         setErrors({})
         setApiError('')
         setLoading(true)
-
+        
         try {
             const supabase = createClient();
-            const {error} = await supabase.auth.signUp({
+            const {data, error} = await supabase.auth.signInWithPassword({
                 email: formData.email,
-                password: formData.password,
-                options: {
-                    emailRedirectTo: `${window.location.origin}/signin`,
-                },
+                password: formData.password
             })
-            
+
+
             if (error) {
                 setApiError(error.message)
                 return
             }
 
-            router.push(`/verify-email?email=${encodeURIComponent(formData.email)}`);
+            router.replace(`/dashboard`)
+            router.refresh()
         } catch (error) {
-            setApiError("Something went wrong. Please try again.")
+            setApiError('Something went wrong. Please try again.')
         } finally {
             setLoading(false)
         }
     }
-
 
 
   return (
@@ -118,26 +106,15 @@ export default function SignupForm() {
             errors={errors.password}
         />
 
-        {/* confirm password  */}
-        <Input
-            id="confirmPassword"
-            name="confirmPassword"
-            label="Confirm Password"
-            type="password"
-            placeholder="Confirm your password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            errors={errors.confirmPassword}
-        />
-
-        {apiError && (
-        <div className="rounded-lg border border-light-error/20 bg-light-error/5 px-4 py-3 text-sm text-light-error ">
-          {apiError}
-        </div>
-        )}
+         {apiError && (
+            <div className="rounded-lg border border-light-error/20 bg-light-error/5 px-4 py-3 text-sm text-light-error ">
+            {apiError}
+            </div>
+        )}           
+                    
         {/* button submit */}
         <Button >
-            {loading ? 'Creating account...' : 'Create Account'}
+            {loading ? 'Signing In...' : 'Sign In'}
         </Button>
                     
     </form>
