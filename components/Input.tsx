@@ -1,6 +1,7 @@
 "use client";
 
 
+import Link from "next/link";
 import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
@@ -15,10 +16,11 @@ type InputProps = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   errors?: string;
+  apierrors?: string;
 };
 
 export default function Input({
-  id, name, label, type = "text", placeholder, value, onChange, errors,
+  id, name, label, type = "text", placeholder, value, onChange, errors, apierrors,
 }: InputProps) {
 
 
@@ -26,12 +28,19 @@ export default function Input({
     const inputType = showPassword && type === "password" ? "text" : type;
   return (
     <div className="flex flex-col gap-1.5">
-      <label
-        htmlFor={id}
-        className="text-xs font-medium uppercase tracking-wide text-foreground/70"
-      >
-        {label}
-      </label>
+      <div className="w-full flex justify-between">
+        <label
+          htmlFor={id}
+          className="text-xs font-medium uppercase tracking-wide text-foreground/70"
+        >
+          {label}
+        </label>
+        {apierrors && (
+          <Link href="/reset-password" className="text-sm text-blue-600 hover:text-blue-500">
+            Forgot password?
+          </Link>
+        )}
+      </div>
       <div className="relative">
           <input
             id={id}
