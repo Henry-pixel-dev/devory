@@ -36,7 +36,7 @@ export default function Input({
           {label}
         </label>
         {apierrors && (
-          <Link href="/reset-password" className="text-sm text-blue-600 hover:text-blue-500">
+          <Link href="/forget-password" className="text-sm text-blue-600 hover:text-blue-500">
             Forgot password?
           </Link>
         )}
