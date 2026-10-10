@@ -18,6 +18,7 @@ export default function ResetPasswords() {
   const [errors, setErrors] = useState<FormErrors>({})
   const [apiError, setApiError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
   const [formData, setFormData] = useState({
       password: '',
       confirmPassword: '',
@@ -30,7 +31,46 @@ export default function ResetPasswords() {
      const handleSubmission = async (e:React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault()
         
-        const newErrors: FormErrors = {}
+        const newError: FormErrors = {}
+
+        if(!formData.password) {
+            newError.password = 'Password is required'
+        } else if(formData.password.length < 6) {
+            newError.password = 'Password must be at least 6 characters'
+        }
+            
+        if(!formData.confirmPassword) {
+            newError.confirmPassword = 'Please confirm your password'
+        } else if(formData.confirmPassword !== formData.password) {
+            newError.confirmPassword = 'Passwords do not match'
+        }
+
+        if (Object.keys(newError).length > 0) {
+            setErrors(newError)
+            return
+        }
+
+        setErrors({})
+        setApiError('')
+        setLoading(true)
+
+        try {
+            const supabase = createClient()
+            const {error} = await supabase.auth.updateUser({
+                password: formData.password
+            })
+
+            if (error) {
+                setApiError(error.message)
+            }
+
+            setSuccess(true)
+            router.replace('./signin')
+        } catch (err) {
+            setApiError(err instanceof Error ? err.message : 'Something went wrong.')
+        } finally {
+            setLoading(false)
+        }
      }
 
   return (

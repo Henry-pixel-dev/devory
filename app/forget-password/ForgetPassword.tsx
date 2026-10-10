@@ -11,7 +11,6 @@ export default function ResetPasswordCom() {
     const [error, setError] = useState('')
     const [apiError, setApiError] = useState('')
     const [loading, setLoading] = useState(false)
-    const [success, setSuccess] = useState(false)
    
     
     const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -33,7 +32,7 @@ export default function ResetPasswordCom() {
 
         try {
             const supabase = createClient()
-            const {data, error} = await supabase.auth.resetPasswordForEmail(email, {
+            const { error} = await supabase.auth.resetPasswordForEmail(email, {
                 redirectTo: `${window.location.origin}/reset-password`
             })
             
@@ -42,7 +41,6 @@ export default function ResetPasswordCom() {
                 return
             }
             
-            setSuccess(true)
             
         } catch (err) {
             setApiError(err instanceof Error ? err.message : 'Something went wrong.')
