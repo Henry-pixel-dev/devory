@@ -21,7 +21,7 @@ export default async function VerifyEmail({ searchParams, }: {  searchParams: Pr
       {/* Radial glow */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -hrefp-40 left-1/2 -z-10 h-150 w-150 -translate-x-1/2 rounded-full bg-light-accent/4 blur-[100px] dark:bg-dark-accent/6"
+        className="pointer-events-none absolute -top-40 left-1/2 -z-10 h-150 w-150 -translate-x-1/2 rounded-full bg-light-accent/4 blur-[100px] dark:bg-dark-accent/6"
       />
 
       <div
@@ -65,7 +65,7 @@ export default async function VerifyEmail({ searchParams, }: {  searchParams: Pr
                 Check your email
               </h1>
               <p className="mt-2 max-w-xs font-sans text-sm leading-relaxed text-tertiary">
-                We sent a confirmation link href{' '}
+                We sent a confirmation link to{' '}
                 <span className="font-medium text-light-accent dark:text-dark-accent">
                   {email ?? "your email"}
                 </span>
@@ -77,8 +77,8 @@ export default async function VerifyEmail({ searchParams, }: {  searchParams: Pr
               className="mt-6 flex flex-col items-center gap-3 text-center"
             >
               <p className="max-w-xs font-sans text-sm leading-relaxed text-tertiary-foreground ">
-                We sent a confirmation link href your email address. Click the link
-                in the email href activate your account.
+                We sent a confirmation link to your email address. Click the link
+                in the email to activate your account.
               </p>
               <p className="font-sans text-xs text-tertiary ">
                 Can't find it? Check your spam folder.
