@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import Dlogo from "../../public/Dlogo.png";
-import { FaCheckCircle, FaRegCheckCircle } from 'react-icons/fa';
+import {  FaRegCheckCircle } from 'react-icons/fa';
 
 
 export default function ResetPasswords() {
@@ -70,7 +70,12 @@ export default function ResetPasswords() {
                 return;
             }
 
+            
+            await supabase.auth.signOut();            
+            router.refresh()
             setSuccess(true)
+            
+
         } catch (err) {
             setApiError(err instanceof Error ? err.message : 'Something went wrong.')
         } finally {
