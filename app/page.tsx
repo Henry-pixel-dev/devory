@@ -21,7 +21,7 @@ export default async function LandingPage() {
   return (
     <>
       <main className="container mx-auto flex flex-col space-y-8 min-h-screen bg-background">
-        <section className=" w-full flex justify-between item-start space-x-8 overflow-hidden  rounded-lg p-6 md:p-12">
+        <section className=" w-full flex justify-between items-start space-x-8 overflow-hidden  rounded-lg p-6 md:p-12">
       
           {/* first child of the hero  */}
           <div className="relative isolate flex-1 flex flex-col items-start space-y-4 mt-20  p-6">

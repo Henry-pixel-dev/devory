@@ -13,7 +13,7 @@
   --color-tertiary: var(--tertiary);
   --color-tertiary-foreground: var(--tertiary-foreground);
   --color-light-error: var(--light-error);
-  --color-light-border: var(--light-border)
+  --color-light-border: var(--light-border);
   --font-display: var(--font-archivo-black);
 }
 
