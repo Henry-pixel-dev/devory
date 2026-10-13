@@ -1,7 +1,8 @@
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 
-export default async function DashBoard() {
+
+export default async function HomePage() {
   const supabase = await createClient()
 
   const { data: {user} } = await supabase.auth.getUser()
@@ -10,6 +11,9 @@ export default async function DashBoard() {
     redirect("/signin")
   }
   return (
-    <div>DasBoard</div>
+    <section >
+    
+
+    </section>
   )
 }
