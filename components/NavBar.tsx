@@ -5,7 +5,7 @@ import dlogo from "../public/Dlogo.png";
 import Hamburger from "./Hamburger";
 import { createClient } from "@/lib/supabase/server";
 import SignOutBtn from "./SIgnOutBtn";
-import { revalidatePath } from 'next/cache';
+// import { revalidatePath } from 'next/cache';
 
 export default async function NavBar() {
 
