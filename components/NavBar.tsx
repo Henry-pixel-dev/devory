@@ -1,6 +1,5 @@
 import  Link   from "next/link";
 import Image from "next/image";
-import logo from "../public/logo.png";
 import LoginBtn from "./LoginBtn";
 import dlogo from "../public/Dlogo.png";
 import Hamburger from "./Hamburger";

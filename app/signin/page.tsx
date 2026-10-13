@@ -4,11 +4,21 @@ import Link from "next/link";
 import Image from "next/image";
 import Dlogo from "../../public/Dlogo.png";
 import SignInForm from "./SignInForm";
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
 
 
 
 
-export default function Signin() {
+export default async function Signin() {
+  const supabase = await createClient()
+
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (user) {
+    redirect("/dashboard")
+  }
+  
   return (
     <main className="w-full min-h-screen flex flex-col items-center justify-center md:flex-row md:justify-between md:items-start md:gap-10">
         {/* the form */}

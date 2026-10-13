@@ -1,6 +1,14 @@
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
 
+export default async function Favorite() {
+  const supabase = await createClient()
 
-export default function Favorite() {
+  const { data: {user} } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect("/signin")
+  }
   return (
     <div>Favorite</div>
   )

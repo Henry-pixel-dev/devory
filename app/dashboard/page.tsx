@@ -1,6 +1,14 @@
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
 
+export default async function DashBoard() {
+  const supabase = await createClient()
 
-export default function DasBoard() {
+  const { data: {user} } = await supabase.auth.getUser()
+
+  if (!user) {
+    redirect("/signin")
+  }
   return (
     <div>DasBoard</div>
   )

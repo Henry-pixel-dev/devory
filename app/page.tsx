@@ -5,9 +5,19 @@ import bgLogo from "../public/logo_transparent-.png";
 import LoginBtn from "@/components/LoginBtn";
 import FeatureCards from "@/components/FeaturesCard"; 
 import Footer from "@/components/Footer";
+import { createClient } from "@/lib/supabase/server"
+import { redirect } from "next/navigation"
 
 
-export default function LandingPage() {
+export default async function LandingPage() {
+   const supabase = await createClient()
+
+  const { data: {user} } = await supabase.auth.getUser()
+
+  if (user) {
+    redirect("/dashboard")
+  }
+
   return (
     <>
       <main className="container mx-auto flex flex-col space-y-8 min-h-screen bg-background">
