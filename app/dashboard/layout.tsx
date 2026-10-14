@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import dlogo from  "@/public/Dlogo.png"
+import HamburgerBtn from "@/components/HamburgerBtn";
 
 
 export default function DashBoardLayout( {children} : { children : React.ReactNode } ) {
   return (
-    <main className="w-full h-full flex md:flex-row  ">
+    <main className="w-full h-full flex flex-col md:flex-row  ">
         
-        <aside className="w-sm md:w-64 min-h-screen  border-r ">
+        <aside className="hidden md:flex md:flex-col w-sm md:w-64 min-h-screen  border-r ">
           <header className="mb-6 px-6 py-3">
             <Link href="/dashboard" className="flex items-end space-x-2">
             <Image
@@ -50,6 +51,20 @@ export default function DashBoardLayout( {children} : { children : React.ReactNo
               </li> 
           </ul>
       </aside>
+
+      <nav className="w-full flex justify-between p-6 md:hidden">
+        <HamburgerBtn />
+        <Link href="/profile" className="flex items-center">
+          <Image
+            src={dlogo}
+            alt="Devory Logo"
+            width={28}
+            height={28}
+            placeholder="blur"
+            quality={70}
+          />
+        </Link>
+      </nav>
       <section className="min-h-screen w-full flex flex-col items-start ">
         {children}
       </section>
