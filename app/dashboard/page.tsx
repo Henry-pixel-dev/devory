@@ -78,7 +78,7 @@ export default async function HomePage() {
               <p className="md:hidden mb-3">Authour Henry</p>
             </div>
             <p className="hidden md:block">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus possimus harum natus. Possimus quae laboriosam magnam omnis. Quisquam fuga repellendus quod reprehenderit, deleniti vero labore neque veniam facilis quo corrupti.
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus possimus harum natus. Possimus quae laboriosam magnam omnis.
             </p>
 
             <div className="self-start flex flex-col justify-between space-y-12 md:hidden ">
@@ -91,10 +91,22 @@ export default async function HomePage() {
           </div>
 
           {/* collections cars */}
-          <div className="flex-2">
+          <div className="flex-2 ">
             <p className="md:hidden mb-3">Current collection</p>
-            <div className="border">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt adipisci ex tenetur id! Deserunt optio fhfjbsodfub fuga.
+            <div className="border flex flex-wrap md:grid md:grid-cols-2 md:grid-rows-2 gap-4">
+              <div className=" min-w-32 min-h-32 w-full flex-1 bg-primary rounded-md text-secondary p-3">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quibusdam quia magni porro molestias corrupti .
+              </div>
+              <div className=" min-w-32 min-h-32 w-full flex-1 bg-primary rounded-md text-secondary p-3">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quibusdam quia magni porro molestias corrupti .
+              </div>
+              <div className=" min-w-32 min-h-32 w-full flex-1 bg-primary rounded-md text-secondary p-3">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quibusdam quia magni porro molestias corrupti .
+              </div>
+              <div className=" min-w-32 min-h-32 w-full bg-primary rounded-md text-secondary p-3">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quibusdam quia magni porro molestias corrupti .
+              </div>
+              
             </div>
           </div>
         </div>
