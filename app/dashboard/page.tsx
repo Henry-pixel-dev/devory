@@ -1,5 +1,8 @@
 import { createClient } from "@/lib/supabase/server"
+import Image from "next/image";
 import { redirect } from "next/navigation"
+import manURL from "@/public/man.webp"
+import { LuArrowUpRight} from 'react-icons/lu';
 
 
 export default async function HomePage() {
@@ -59,16 +62,40 @@ export default async function HomePage() {
         </div>
 
         {/* resources and collections */}
-        <div className="flex flex-col space-y-6 items-center md:flex-row md:items-start md:space-x-4 md:space-y-0">
+        <div className="flex flex-col space-y-6 items-center md:flex-row-reverse md:items-start md:gap-6 md:space-y-0">
           {/* resource, a single interface that show a particular resource  */}
-          <div className="border border-violet-500">
             {/* url in image form  */}
-            <p className="hidden md:block">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus possimus harum natus. Possimus quae laboriosam magnam omnis. Quisquam fuga repellendus quod reprehenderit, deleniti vero labore neque veniam facilis quo corrupti.</p>
+          <div className=" w-full flex-1 flex flex-row space-x-3 p-3  items-center  md:max-w-64 rounded-2xl border border-amber-400 md:flex-col md:rounded-none md:p-0">
+            <Image
+              src={manURL}
+              alt="Devory Logo"
+              placeholder="blur"
+              quality={70}
+              className="w-full h-32"
+            />
+            <div>
+              <h3 className="mb-3">Tittle of the resoruces</h3>
+              <p className="md:hidden mb-3">Authour Henry</p>
+            </div>
+            <p className="hidden md:block">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus possimus harum natus. Possimus quae laboriosam magnam omnis. Quisquam fuga repellendus quod reprehenderit, deleniti vero labore neque veniam facilis quo corrupti.
+            </p>
+
+            <div className="self-start flex flex-col justify-between space-y-12 md:hidden ">
+              <div className="max-w-4 max-h-9 relative bg-tertiary/30 rounded-lg p-4 ">
+                <LuArrowUpRight width={50} height={50} className="absolute top-2 left-2"/>
+              </div>
+
+              
+            </div>
           </div>
 
           {/* collections cars */}
-          <div className="border">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt adipisci ex tenetur id! Deserunt optio fhfjbsodfub fuga.
+          <div className="flex-2">
+            <p className="md:hidden mb-3">Current collection</p>
+            <div className="border">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Deserunt adipisci ex tenetur id! Deserunt optio fhfjbsodfub fuga.
+            </div>
           </div>
         </div>
         
