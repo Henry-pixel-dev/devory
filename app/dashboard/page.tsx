@@ -13,6 +13,9 @@ export default async function HomePage() {
   if (!user) {
     redirect("/signin")
   }
+  
+
+ 
   return (
     <section className="container mx-auto flex flex-col  space-y-8 md:mt-10 p-6">
       {/* hero section */}

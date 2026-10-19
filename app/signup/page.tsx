@@ -3,13 +3,13 @@ import Image from "next/image";
 import Dlogo from "../../public/Dlogo.png";
 import SignupForm from "./SignupForm";
 
+import Resources from "../dashboard/resources/page";
+
 
 
 
 
 export default function Signup() {
-  
-
 
   return (
     <main className="w-full min-h-screen flex flex-col items-center justify-center md:flex-row md:justify-between md:items-start md:gap-10">

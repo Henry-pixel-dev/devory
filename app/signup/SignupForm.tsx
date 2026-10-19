@@ -5,6 +5,7 @@ import { useState } from "react";
 import Button from "@/components/SubmitButton";
 import Input from "@/components/Input";
 import { createClient } from "@/lib/supabase/client";
+import { POST } from "../api/signup/route";
 
 
 
@@ -65,19 +66,28 @@ export default function SignupForm() {
 
         try {
             const supabase = createClient();
-            const {error} = await supabase.auth.signUp({
+            const {data : { user }, error} = await supabase.auth.signUp({
                 email: formData.email,
                 password: formData.password,
                 options: {
                     emailRedirectTo: `${window.location.origin}/signin`,
                 },
             })
+
             
             if (error) {
                 setApiError(error.message)
                 return
             }
 
+            const userId = user?.id
+
+            const res = await fetch("api/signup", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({ userId })
+            })
+            
             router.push(`/verify-email?email=${encodeURIComponent(formData.email)}`);
         } catch (error) {
             setApiError("Something went wrong. Please try again.")
