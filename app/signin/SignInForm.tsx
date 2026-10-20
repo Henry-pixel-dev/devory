@@ -65,9 +65,8 @@ export default function SignInForm() {
                 setApiError(error.message)
                 return
             }
-
-            router.replace(`/dashboard`)
-            router.refresh()
+            
+            window.location.assign("/dashboard")
         } catch (error) {
             setApiError('Something went wrong. Please try again.')
         } finally {

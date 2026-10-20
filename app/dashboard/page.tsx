@@ -3,7 +3,9 @@ import Image from "next/image";
 import { redirect } from "next/navigation"
 import manURL from "@/public/man.webp"
 import { LuArrowUpRight} from 'react-icons/lu';
-
+import { seedUserData } from '@/lib/seedUserData'
+import ColllectionsCard from '@/components/CollectionCards'
+import { Suspense } from "react";
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -12,6 +14,17 @@ export default async function HomePage() {
 
   if (!user) {
     redirect("/signin")
+  }
+  
+  if (!user.user_metadata?.seeded) {
+    try {
+      // 2. run the seed for this user
+      await seedUserData(user.id)
+      // 3. only after it succeeds, set the flag
+      await supabase.auth.updateUser({ data: { seeded: true } })
+    } catch (err) {
+      console.error("Seeding failed:", err)
+    }
   }
   
   
@@ -108,7 +121,9 @@ export default async function HomePage() {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quibusdam quia magni porro molestias corrupti .
               </div>
               <div className=" min-w-32 min-h-32 w-full bg-primary rounded-md text-secondary p-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quibusdam quia magni porro molestias corrupti .
+                <Suspense>
+                  <ColllectionsCard />
+                </Suspense>
               </div>
               
             </div>

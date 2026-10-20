@@ -1,4 +1,4 @@
-import { starterPack } from "./StarterPack"
+import { starterPack } from "./starterPack"
 import { createClient } from "./supabase/server"
 
 export  async function seedUserData(userId: string)  {
@@ -14,13 +14,15 @@ export  async function seedUserData(userId: string)  {
       .select()
 
     if (error || !data) {
-      console.error('Failed to create collections:', error)
+      console.error(`Failed to create collections:,: ${error?.message}`)
        return
     }
 
     for ( const starterCollection of starterPack ) {
       const savedCollection = data.find(c => c.collection_name === starterCollection.collection_name)
-      if (!savedCollection) continue
+      if (!savedCollection){
+        throw new Error(`Failed to find savedCollection collection `)
+      }
 
       const resourcesToInsert = starterCollection.resources.map((resource) => {
         return {
@@ -39,11 +41,9 @@ export  async function seedUserData(userId: string)  {
 
 
       if (resourcesError || !resourceData) {
-        console.error(
-          `Failed to insert resources for ${starterCollection.collection_name}:`,
-          resourcesError
-        );
-        continue
+        throw new Error(
+          `Failed to insert resources for ${starterCollection.collection_name}: ${resourcesError?.message}`
+        )
       }
 
       const junctionRows = resourceData.map((resource) => ({
@@ -51,14 +51,13 @@ export  async function seedUserData(userId: string)  {
         resource_id: resource.id,
       }))
 
-      const { error: apiError } = await supabase
+      const { error: linkError } = await supabase
         .from('collection_resources')
         .insert(junctionRows)
 
-      if (apiError) {
-        console.error(
-          `Failed to link resources for ${starterCollection.collection_name}:`,
-          apiError
+      if (linkError) {
+        throw new Error(
+          `Failed to link resources for ${starterCollection.collection_name}: ${linkError.message}`
         )
       }
     }

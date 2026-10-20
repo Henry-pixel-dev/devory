@@ -66,7 +66,7 @@ export default function SignupForm() {
 
         try {
             const supabase = createClient();
-            const {data : { user }, error} = await supabase.auth.signUp({
+            const {error} = await supabase.auth.signUp({
                 email: formData.email,
                 password: formData.password,
                 options: {
@@ -80,13 +80,6 @@ export default function SignupForm() {
                 return
             }
 
-            const userId = user?.id
-
-            const res = await fetch("api/signup", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({ userId })
-            })
             
             router.push(`/verify-email?email=${encodeURIComponent(formData.email)}`);
         } catch (error) {
