@@ -4,8 +4,14 @@ import { redirect } from "next/navigation"
 import manURL from "@/public/man.webp"
 import { LuArrowUpRight} from 'react-icons/lu';
 import { seedUserData } from '@/lib/seedUserData'
-import ColllectionsCard from '@/components/CollectionCards'
-import { Suspense } from "react";
+import CollectionCard from "@/components/CollectionCard";
+import type { CollectionWithResources } from "@/lib/types"
+
+
+
+
+
+    
 
 export default async function HomePage() {
   const supabase = await createClient()
@@ -26,7 +32,51 @@ export default async function HomePage() {
       console.error("Seeding failed:", err)
     }
   }
+
   
+    const [collectionsRes, resourcesRes, linksRes] = await Promise.all([
+      supabase.from("collections").select("id, collection_name"),
+      supabase.from("resources").select("id, resource_name, resource_url, resource_description, is_favorite"),
+      supabase.from("collection_resources").select("collection_id, resource_id"),
+    ])
+
+    const { data: collections, error: collectionsError } = collectionsRes
+    const { data: resources, error: resourcesError } = resourcesRes
+    const { data: links, error: linksError } = linksRes
+
+    if (collectionsError || resourcesError || linksError) {
+      throw new Error(`There is an error fetching : ${collectionsError}, ${resourcesError}, ${linksError}`)
+    }
+
+    const collectionsArray: CollectionWithResources[] =
+      collections?.map((collection) => {
+        const resourceIds =
+          links
+          ?.filter((link) => link.collection_id === collection.id)
+          .map((link) => link.resource_id) ?? [];
+
+        const collectionResources =
+          resources?.filter((resource) =>
+          resourceIds.includes(resource.id)
+        ) ?? [];
+
+        return {
+          id: collection.id,
+          collection_name: collection.collection_name,
+          resources: collectionResources,
+        };
+    }) ?? []; 
+
+  const linkedResourceIds = new Set(
+    links?.map((link) => link.resource_id) ?? []
+  );
+
+  const uncategorizedResources =
+    resources?.filter(
+      (resource) => !linkedResourceIds.has(resource.id)
+  ) ?? [];
+
+   
   
 
  
@@ -110,22 +160,12 @@ export default async function HomePage() {
           {/* collections cars */}
           <div className="flex-2 ">
             <p className="md:hidden mb-3">Current collection</p>
-            <div className="border flex flex-wrap md:grid md:grid-cols-2 md:grid-rows-2 gap-4">
-              <div className=" min-w-32 min-h-32 w-full flex-1 bg-primary rounded-md text-secondary p-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quibusdam quia magni porro molestias corrupti .
-              </div>
-              <div className=" min-w-32 min-h-32 w-full flex-1 bg-primary rounded-md text-secondary p-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quibusdam quia magni porro molestias corrupti .
-              </div>
-              <div className=" min-w-32 min-h-32 w-full flex-1 bg-primary rounded-md text-secondary p-3">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem quibusdam quia magni porro molestias corrupti .
-              </div>
-              <div className=" min-w-32 min-h-32 w-full bg-primary rounded-md text-secondary p-3">
-                <Suspense>
-                  <ColllectionsCard />
-                </Suspense>
-              </div>
-              
+            <div className="flex flex-col md:grid md:grid-cols-2 md:grid-rows-2 gap-4">
+              {collectionsArray.slice(0, 4).map((collection) => (
+                <div key={collection.id}>
+                  {CollectionCard(collection.collection_name)}
+                </div>
+              ))}
             </div>
           </div>
         </div>
