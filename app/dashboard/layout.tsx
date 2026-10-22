@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import dlogo from  "@/public/Dlogo.png"
 import HamburgerBtn from "@/components/HamburgerBtn";
+import { FiHome, FiLink, FiLayers, FiStar } from "react-icons/fi";
+import FooterBtn from "@/components/FooterBtn";
 
 
 export default function DashBoardLayout( {children} : { children : React.ReactNode } ) {
@@ -68,6 +70,21 @@ export default function DashBoardLayout( {children} : { children : React.ReactNo
       <section className="min-h-screen w-full flex flex-col items-start ">
         {children}
       </section>
+
+      <footer className="bg-background fixed bottom-0 left-0 w-full p-3 flex flex-row justify-between z-50 md:hidden">
+        <FooterBtn href="/dashboard" icon={FiHome}>
+            Dashboard
+        </FooterBtn>
+        <FooterBtn href="/dashboard/collections" icon={FiLayers}>
+            Collection
+        </FooterBtn>
+        <FooterBtn href="/dashboard/resources" icon={FiLink}>
+            Resources
+        </FooterBtn>
+        <FooterBtn href="/dashboard/favorite" icon={FiStar}>
+            Favorite
+        </FooterBtn>
+      </footer>
     </main>
   )
 }
