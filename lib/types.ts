@@ -13,3 +13,8 @@
         collection_name: string;
         resources: Resource[];
     };
+
+export type UserData = {
+  collections: CollectionWithResources[];
+  uncategorizedResources: Resource[];
+};

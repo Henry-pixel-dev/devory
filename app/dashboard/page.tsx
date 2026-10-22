@@ -5,12 +5,19 @@ import manURL from "@/public/man.webp"
 import { LuArrowUpRight} from 'react-icons/lu';
 import { seedUserData } from '@/lib/seedUserData'
 import CollectionCard from "@/components/CollectionCard";
-import type { CollectionWithResources } from "@/lib/types"
+import { fetchData } from "@/lib/getUser"
+import { fetchPreviews } from "@/lib/FetchPreview"
+import ResourcesCard, { type resourceType } from '@/components/ResourcesCard'
 
 
-
-
-
+function getShuffledArray<T>(array: readonly T[]): T[] {
+    const copy = [...array];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
     
 
 export default async function HomePage() {
@@ -33,51 +40,32 @@ export default async function HomePage() {
     }
   }
 
+  const { collections: collectionsArray } = await fetchData()
+ 
+  const allurl_object = collectionsArray.map(collection => {
+    const resource_url = collection.resources.map(resource => {
+
+      return resource.resource_url
+    })
+
+    return resource_url
+  })
+
+  const allurl = allurl_object.flatMap(url => url)
+
+  const shuflleUrl = getShuffledArray(allurl)
+
+  const object_single_url = shuflleUrl.slice(0, 1)
+
+  const url = object_single_url[0]
+
+  const preview: resourceType = await fetchPreviews(url)
   
-    const [collectionsRes, resourcesRes, linksRes] = await Promise.all([
-      supabase.from("collections").select("id, collection_name"),
-      supabase.from("resources").select("id, resource_name, resource_url, resource_description, is_favorite"),
-      supabase.from("collection_resources").select("collection_id, resource_id"),
-    ])
 
-    const { data: collections, error: collectionsError } = collectionsRes
-    const { data: resources, error: resourcesError } = resourcesRes
-    const { data: links, error: linksError } = linksRes
 
-    if (collectionsError || resourcesError || linksError) {
-      throw new Error(`There is an error fetching : ${collectionsError}, ${resourcesError}, ${linksError}`)
-    }
-
-    const collectionsArray: CollectionWithResources[] =
-      collections?.map((collection) => {
-        const resourceIds =
-          links
-          ?.filter((link) => link.collection_id === collection.id)
-          .map((link) => link.resource_id) ?? [];
-
-        const collectionResources =
-          resources?.filter((resource) =>
-          resourceIds.includes(resource.id)
-        ) ?? [];
-
-        return {
-          id: collection.id,
-          collection_name: collection.collection_name,
-          resources: collectionResources,
-        };
-    }) ?? []; 
-
-  const linkedResourceIds = new Set(
-    links?.map((link) => link.resource_id) ?? []
-  );
-
-  const uncategorizedResources =
-    resources?.filter(
-      (resource) => !linkedResourceIds.has(resource.id)
-  ) ?? [];
 
    
-  
+
 
  
   return (
@@ -94,7 +82,7 @@ export default async function HomePage() {
         {/* card container */}
         <div>
           <h2 className="text-base text-primary font-light md:font-bold mb-3">
-            Create Your Study Materials.
+            amadeor
           </h2>
           <div className="flex flew-wrap space-x-3 items-start overflow-y-auto">
             {/* cards */}
@@ -131,31 +119,15 @@ export default async function HomePage() {
         {/* resources and collections */}
         <div className="flex flex-col space-y-6 items-center md:flex-row-reverse md:items-start md:gap-6 md:space-y-0">
           {/* resource, a single interface that show a particular resource  */}
-            {/* url in image form  */}
-          <div className=" w-full flex-1 flex flex-row space-x-3 p-3  items-center  md:max-w-64 rounded-2xl border border-amber-400 md:flex-col md:rounded-none md:p-0">
-            <Image
-              src={manURL}
-              alt="Devory Logo"
-              placeholder="blur"
-              quality={70}
-              className="w-full h-32"
-            />
-            <div>
-              <h3 className="mb-3">Tittle of the resoruces</h3>
-              <p className="md:hidden mb-3">Authour Henry</p>
-            </div>
-            <p className="hidden md:block">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Repellendus possimus harum natus. Possimus quae laboriosam magnam omnis.
-            </p>
+          
+          
+          <ResourcesCard
+            image={preview.image}
+            title={preview.title}
+            author={preview.author}
+            description={preview.description}
+          />
 
-            <div className="self-start flex flex-col justify-between space-y-12 md:hidden ">
-              <div className="max-w-4 max-h-9 relative bg-tertiary/30 rounded-lg p-4 ">
-                <LuArrowUpRight width={50} height={50} className="absolute top-2 left-2"/>
-              </div>
-
-              
-            </div>
-          </div>
 
           {/* collections cars */}
           <div className="flex-2 ">
