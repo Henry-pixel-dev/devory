@@ -1,4 +1,4 @@
-import { starterPack } from "./starterPack"
+import { starterPack } from "./StarterPack"
 import { createClient } from "./supabase/server"
 
 export  async function seedUserData(userId: string)  {
