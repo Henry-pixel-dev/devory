@@ -1,13 +1,9 @@
 import { createClient } from "@/lib/supabase/server"
-import Image from "next/image";
 import { redirect } from "next/navigation"
-import manURL from "@/public/man.webp"
-import { LuArrowUpRight} from 'react-icons/lu';
 import { seedUserData } from '@/lib/seedUserData'
 import CollectionCard from "@/components/CollectionCard";
 import { fetchData } from "@/lib/getUser"
-import { fetchPreviews } from "@/lib/FetchPreview"
-import ResourcesCard, { type resourceType } from '@/components/ResourcesCard'
+import ResourcesCard from '@/components/ResourcesCard'
 
 
 function getShuffledArray<T>(array: readonly T[]): T[] {
