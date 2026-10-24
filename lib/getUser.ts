@@ -14,7 +14,7 @@ export async function fetchData(): Promise<UserData> {
 
     const [collectionsRes, resourcesRes, linksRes] = await Promise.all([
       supabase.from("collections").select("id, collection_name"),
-      supabase.from("resources").select("id, resource_name, resource_url, resource_description, is_favorite"),
+      supabase.from("resources").select("id, resource_name, resource_url, resource_description, resource_type, resource_image, is_favorite"),
       supabase.from("collection_resources").select("collection_id, resource_id"),
     ])
 

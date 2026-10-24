@@ -4,13 +4,13 @@ import { LuArrowUpRight } from "react-icons/lu";
 export type resourceType = {
     image: string,
     title: string;
-    author?: string;
+    type?: string;
     description: string;
 }
 
 
 
-export default function ResourcesCard({image,title ,author, description }: resourceType) {
+export default function ResourcesCard({image,title , type, description }: resourceType) {
   return (
     <div className="bg-primary/10 w-full flex-1 flex flex-row space-x-4 p-3  items-center  md:max-w-64 rounded-2xl  md:flex-col md:space-y-4">
         <div className="relative h-24 w-24 shrink-0 md:h-32 md:w-full ">
@@ -23,12 +23,12 @@ export default function ResourcesCard({image,title ,author, description }: resou
             />
          </div>
         <div>
-            <h3 className="mb-3 font-bold md:text-2xl text-primary ">
-                {title.slice(0, 40)}
+            <h3 className="mb-3 font-bold md:text-2xl text-primary whitespace-pre-wrap">
+                {title.slice(0, 20)}
                 <span>...</span>
             </h3>
             <p className="md:hidden mb-3">
-                {author}
+                {type}
             </p>
             <p className="hidden md:block md:text-base text-primary">
               {description.slice(0, 50)}

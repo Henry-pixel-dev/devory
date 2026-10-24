@@ -29,6 +29,8 @@ export  async function seedUserData(userId: string)  {
           resource_name: resource.resource_name,
           resource_url: resource.resource_url,
           resource_description: resource.resource_description,
+          resource_type: resource.type,
+          resource_image: resource.image,
           user_id : userId,
           is_favorite: false
         }

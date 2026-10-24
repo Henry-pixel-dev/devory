@@ -42,32 +42,13 @@ export default async function HomePage() {
 
   const { collections: collectionsArray } = await fetchData()
  
-  const allurl_object = collectionsArray.map(collection => {
-    const resource_url = collection.resources.map(resource => {
-
-      return resource.resource_url
-    })
-
-    return resource_url
-  })
-
-  const allurl = allurl_object.flatMap(url => url)
-
-  const shuflleUrl = getShuffledArray(allurl)
-
-  const object_single_url = shuflleUrl.slice(0, 1)
-
-  const url = object_single_url[0]
-
-  const preview: resourceType = await fetchPreviews(url)
   
+ const allResources = collectionsArray.flatMap((collection) => collection.resources)
+ const shuffledResources = getShuffledArray(allResources)
 
+  console.log("collectionsArray", collectionsArray)
+  console.log("allResources", allResources)
 
-
-   
-
-
- 
   return (
     <section className="container mx-auto flex flex-col  space-y-8 md:mt-10 p-6">
       {/* hero section */}
@@ -120,14 +101,18 @@ export default async function HomePage() {
         <div className="flex flex-col space-y-6 items-center md:flex-row-reverse md:items-start md:gap-6 md:space-y-0">
           {/* resource, a single interface that show a particular resource  */}
           
+           
+           {shuffledResources.slice(0, 1).map((preview, index) => (
+             <div key={index}>
+               <ResourcesCard
+                 image={preview.resource_image}
+                 title={preview.resource_name}
+                 type={preview.resource_type}
+                 description={preview.resource_description}
+               />
+             </div>
+           ))}
           
-          <ResourcesCard
-            image={preview.image}
-            title={preview.title}
-            author={preview.author}
-            description={preview.description}
-          />
-
 
           {/* collections cars */}
           <div className="flex-2 ">

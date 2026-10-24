@@ -2,7 +2,9 @@
         id: number;
         resource_name: string;
         resource_url: string;
-        resource_description: string | null;
+        resource_type: string ;
+        resource_image: string
+        resource_description: string;
         is_favorite: boolean;
     };
 
