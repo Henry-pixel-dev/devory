@@ -2,8 +2,9 @@
 
 import { useRef } from "react";
 import Input from "./Input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "./SubmitButton";
+
 
 export default function AddResourceButton({ children }: { children: React.ReactNode }) {
     const [formData, setFormData] = useState({
@@ -20,6 +21,45 @@ export default function AddResourceButton({ children }: { children: React.ReactN
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
+
+
+
+     const handleSumbision = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setPreviewStatus("loading")
+        // Simulate an API call
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        setPreviewStatus("done")
+    }
+
+    useEffect(() => {
+        // Case 1: input is empty
+        if (!formData.url) {
+            setPreviewStatus("idle")
+            return
+        }
+
+        // Case 2: input has text
+        let wanted = true
+        setPreviewStatus("loading")
+
+        const timer = setTimeout(async () => {
+            // Simulate an API call
+            await new Promise((resolve) => setTimeout(resolve, 2000))
+
+            if (wanted) {
+                const fetchData = await fetch(`/api/preview?url=${encodeURIComponent(formData.url)}`)
+                const data = await fetchData.json()
+                console.log(data)
+                setPreviewStatus("done")
+            }
+        }, 500)
+
+        return () => {
+            clearTimeout(timer)
+            wanted = false
+        }
+    }, [formData.url])
 
   return (
     <>
@@ -49,10 +89,10 @@ export default function AddResourceButton({ children }: { children: React.ReactN
                 </p>
             </div>
 
-            <form noValidate className="flex flex-col gap-5">
+            <form onSubmit={handleSumbision} noValidate className="flex flex-col gap-5">
                 <Input
                     id="url"
-                    name="ur l"
+                    name="url"
                     label="URL"
                     type="url"
                     placeholder="https://example.com"
