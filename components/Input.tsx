@@ -11,16 +11,17 @@ type InputProps = {
   id: string;
   name: string;
   label: string;
-  type?: "text" | "email" | "password";
+  type?: "text" | "email" | "password" | "url";
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   errors?: string;
   apierrors?: string;
+  disabled?: boolean;
 };
 
 export default function Input({
-  id, name, label, type = "text", placeholder, value, onChange, errors, apierrors,
+  id, name, label, type = "text", placeholder, value, onChange, errors, apierrors, disabled,
 }: InputProps) {
 
 
@@ -49,7 +50,8 @@ export default function Input({
             placeholder={placeholder}
             value={value}
             onChange={onChange}
-            className="w-full rounded-lg border border-primary/30 bg-background px-4 py-3 text-base text-foreground outline-none transition placeholder:text-foreground/40 hover:border-primary/60 focus:border-primary focus:ring-2 focus:ring-primary/20"
+            disabled={disabled}
+            className="w-full rounded-lg border border-primary/30 bg-background px-4 py-3 text-base text-foreground outline-none transition placeholder:text-foreground/40 hover:border-primary/60 focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-50 disabled:cursor-not-allowed"
           />
           { type === "password" && (
             <button

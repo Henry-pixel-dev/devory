@@ -4,6 +4,7 @@ import { seedUserData } from '@/lib/seedUserData'
 import CollectionCard from "@/components/CollectionCard";
 import { fetchData } from "@/lib/getUser"
 import ResourcesCard from '@/components/ResourcesCard'
+import AddResourceButton from "@/components/AddResourceButton";
 
 
 function getShuffledArray<T>(array: readonly T[]): T[] {
@@ -64,9 +65,11 @@ export default async function HomePage() {
           <div className="flex flew-wrap space-x-3 items-start overflow-y-auto">
             {/* cards */}
             <div className=" flex-1 bg-tertiary/30 rounded-lg p-4 min-w-32 h-32 flex flex-col justify-between">
-              <p className=" relative w-9 h-9 bg-background   rounded-full text-2xl font-bold text-primary cursor-pointer  justify-center">
-                <span className=" absolute top-0 left-2.5">+</span>
-              </p>
+              <AddResourceButton>
+                <p className=" relative w-9 h-9 bg-background   rounded-full text-2xl font-bold text-primary cursor-pointer  justify-center">
+                  <span className=" absolute top-0 left-2.5">+</span>
+                </p>
+              </AddResourceButton>
 
               <p>Create resources</p>
             </div>
