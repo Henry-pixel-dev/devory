@@ -1,6 +1,13 @@
 import * as cheerio from 'cheerio';
 
-export async function fetchPreviews(url : string) {
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const url = searchParams.get('url');
+    
+    if (!url) {
+        return new Response(JSON.stringify({ error: 'Missing URL parameter' }), { status: 400 });
+    }
+
     
     const response = await fetch(url);
     const html = await response.text();
@@ -15,6 +22,7 @@ export async function fetchPreviews(url : string) {
     const image = $('meta[property="og:image"]').attr('content') || './logo_transparent-.png';
 
 
-  return  { title, description, image, author: "Unknown" }
+
+  return new Response(JSON.stringify({ title, description, image }), { status: 200 });
     
 }

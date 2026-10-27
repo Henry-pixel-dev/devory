@@ -14,7 +14,7 @@ export default function AddResourceButton({ children }: { children: React.ReactN
         type: "",
         image: "",
     });
-    const [errors, setErrors] = useState({})
+    const [errors, setErrors] = useState<{ url?: string }>({})
     const [previewStatus, setPreviewStatus] = useState<"idle" | "loading" | "done">("idle")
 
     const dialogRef = useRef<HTMLDialogElement>(null)   
@@ -32,27 +32,52 @@ export default function AddResourceButton({ children }: { children: React.ReactN
         setPreviewStatus("done")
     }
 
+
     useEffect(() => {
-        // Case 1: input is empty
+        const urlRegex = /^https?:\/\/([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?([/?#]\S*)?$/i
+
+        // Empty input: reset everything
         if (!formData.url) {
             setPreviewStatus("idle")
+            setErrors({})
             return
         }
 
-        // Case 2: input has text
+        // Not a valid URL yet: don't fetch
+        if (!urlRegex.test(formData.url)) {
+            setPreviewStatus("idle")
+            setErrors({ url: "Invalid URL" })
+            return
+        }
+
+        // Valid URL: start the debounced fetch
         let wanted = true
+        setErrors({})
         setPreviewStatus("loading")
 
         const timer = setTimeout(async () => {
-            // Simulate an API call
-            await new Promise((resolve) => setTimeout(resolve, 2000))
+            try {
+                const res = await fetch(`/api/preview?url=${encodeURIComponent(formData.url)}`)
+                if (!res.ok) throw new Error(`Request failed: ${res.status}`)
+                const data = await res.json()
 
-            if (wanted) {
-                const fetchData = await fetch(`/api/preview?url=${encodeURIComponent(formData.url)}`)
-                const data = await fetchData.json()
+                if (!wanted) return   // stale result, ignore it
                 console.log(data)
-                setPreviewStatus("done")
+                setFormData((prev) => ({
+                    ...prev,
+                    name: data.title || "",
+                    description: data.description || "",
+                    image: data.image || "",
+                }))
+
+            } catch (error) {
+                if (!wanted) return   // stale failure, ignore it
+                console.error("Error fetching preview:", error)
+                setErrors({ url: "Couldn't load a preview. You can fill in the details yourself." })
             }
+
+            // Only reached for the current request, on success or failure
+            setPreviewStatus("done")
         }, 500)
 
         return () => {
@@ -98,6 +123,7 @@ export default function AddResourceButton({ children }: { children: React.ReactN
                     placeholder="https://example.com"
                     value={formData.url}
                     onChange={handleChange}
+                    errors={errors.url}
                     />
                 <Input
                     id="name"

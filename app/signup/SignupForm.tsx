@@ -5,7 +5,7 @@ import { useState } from "react";
 import Button from "@/components/SubmitButton";
 import Input from "@/components/Input";
 import { createClient } from "@/lib/supabase/client";
-import { POST } from "../api/signup/route";
+
 
 
 
