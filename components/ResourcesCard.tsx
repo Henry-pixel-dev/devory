@@ -12,7 +12,7 @@ export type resourceType = {
 
 export default function ResourcesCard({image,title , type, description }: resourceType) {
   return (
-    <div className="bg-primary/10 w-full flex-1 flex flex-row space-x-4 p-3  items-center  md:max-w-64 rounded-2xl  md:flex-col md:space-y-4">
+    <div className="bg-primary/10 w-full flex-1 flex flex-row space-x-3 p-3  items-center  md:max-w-64 rounded-2xl  md:flex-col md:space-y-4">
         <div className="relative h-24 w-24 shrink-0 md:h-32 md:w-full ">
             <Image
                 src={image}
