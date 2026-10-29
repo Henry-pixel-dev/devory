@@ -19,7 +19,7 @@ export async function GET(request: Request) {
         $('meta[property="og:description"]').attr('content') ||
         $('meta[name="description"]').attr('content') || 
         'No description available';
-    const image = $('meta[property="og:image"]').attr('content') || './logo_transparent-.png';
+    const image = $('meta[property="og:image"]').attr('content') || '';
 
 
 

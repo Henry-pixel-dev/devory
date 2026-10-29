@@ -4,9 +4,11 @@ import { useRef } from "react";
 import Input from "./Input";
 import { useState, useEffect } from "react";
 import Button from "./SubmitButton";
+import { createClient } from "@/lib/supabase/client"
 
 
-export default function AddResourceButton({ children }: { children: React.ReactNode }) {
+
+export default function AddResourceButton({ children, userId }: { children: React.ReactNode , userId: string }) {
     const [formData, setFormData] = useState({
         url: "",
         name: "",
@@ -16,26 +18,16 @@ export default function AddResourceButton({ children }: { children: React.ReactN
     });
     const [errors, setErrors] = useState<{ url?: string }>({})
     const [previewStatus, setPreviewStatus] = useState<"idle" | "loading" | "done">("idle")
-
     const dialogRef = useRef<HTMLDialogElement>(null)   
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
-
-
-
-     const handleSumbision = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        setPreviewStatus("loading")
-        // Simulate an API call
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        setPreviewStatus("done")
-    }
-
-
+    const [loading, setLoading] = useState(false)
+    const DEFAULT_IMAGE_PATH = "https://vhzzsqciskijmlwarnsd.supabase.co/storage/v1/object/public/resource-images/defaults/logo_transparent-.png"
+  
     useEffect(() => {
         const urlRegex = /^https?:\/\/([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?([/?#]\S*)?$/i
-
+        
         // Empty input: reset everything
         if (!formData.url) {
             setPreviewStatus("idle")
@@ -59,8 +51,8 @@ export default function AddResourceButton({ children }: { children: React.ReactN
             try {
                 const res = await fetch(`/api/preview?url=${encodeURIComponent(formData.url)}`)
                 if (!res.ok) throw new Error(`Request failed: ${res.status}`)
-                const data = await res.json()
-
+                    const data = await res.json()
+                
                 if (!wanted) return   // stale result, ignore it
                 console.log(data)
                 setFormData((prev) => ({
@@ -69,7 +61,7 @@ export default function AddResourceButton({ children }: { children: React.ReactN
                     description: data.description || "",
                     image: data.image || "",
                 }))
-
+                
             } catch (error) {
                 if (!wanted) return   // stale failure, ignore it
                 console.error("Error fetching preview:", error)
@@ -86,7 +78,48 @@ export default function AddResourceButton({ children }: { children: React.ReactN
         }
     }, [formData.url])
 
-  return (
+
+    const handleSumbision = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        setLoading(true)
+        let imagePath = DEFAULT_IMAGE_PATH
+
+        try {
+            const res = await fetch("/api/upload-image", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ imageUrl: formData.image }),
+            })
+
+
+            if (!res.ok) throw new Error("Image upload failed")
+
+            if (res.ok) {
+                const { path } = await res.json()
+                imagePath = path
+            }
+
+            const supabase = createClient()
+            const { error } = await supabase.from("resources").insert({
+                resource_url: formData.url,
+                resource_name: formData.name,
+                resource_description: formData.description,
+                resource_type: formData.type,
+                resource_image: imagePath,
+                user_id: userId,
+            })
+
+            if (error) throw error
+
+            dialogRef.current?.close()
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setLoading(false)
+        }
+    }
+    
+    return (
     <>
       <button
         onClick={() => dialogRef.current?.showModal()}>
