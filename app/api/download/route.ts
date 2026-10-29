@@ -1,21 +1,21 @@
-const MAX_SIZE = 5 * 1024 * 1024 // 5 MB
+import { downloadImage } from "@/lib/downloadImage";
 
-export async function downloadImage(imageUrl: string) {
-    // 1. only allow http or https (new URL(...) and .protocol can tell you)
-    const url = new URL(imageUrl)
-    if (url.protocol !== "http:" && url.protocol !== "https:") {
-        throw new Error("Only http and https URLs are allowed")
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const url = searchParams.get("url");  
+
+  if (!url) {
+    return new Response(JSON.stringify({ error: 'Missing URL parameter' }), { status: 400 });
     }
 
-    const res = await fetch(imageUrl, { signal: AbortSignal.timeout(8000) })
+    try{
+        const downloadedImage = await downloadImage(url)
+        return new Response(downloadedImage.buffer, {
+            headers: { "Content-Type": downloadedImage.contentType },
+        })
+    } catch (error) {
+        return new Response(JSON.stringify({ error: 'Failed to download image' }), { status: 500 });
+    }
 
-    // 2. if the response is not ok, throw an error
-
-    const contentType = res.headers.get("content-type") ?? ""
-    // 3. if contentType doesn't start with "image/", throw an error
-
-    const buffer = await res.arrayBuffer()
-    // 4. if buffer.byteLength is bigger than MAX_SIZE, throw an error
-
-    return { buffer, contentType }
+    
 }
