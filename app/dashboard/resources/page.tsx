@@ -47,16 +47,21 @@ export default async function Resources() {
 
     </div>
 
-    <div className="flex flex-col space-y-4 md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {resourcesWithImages.map((resource) => (
-        <ResourcesCard
-          key={resource.id}
-          image={resource.imageUrl}
-          title={resource.resource_name}
-          type={resource.resource_type}
-          description={resource.resource_description}
-        />
-      ))}
+    <div>
+      <h1 className="text-base text-primary font-light md:font-bold md:text-2xl mb-3">
+        Resources
+      </h1>
+      <div className="flex flex-col space-y-4 md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {resourcesWithImages.map((resource) => (
+          <ResourcesCard
+            key={resource.id}
+            image={resource.imageUrl}
+            title={resource.resource_name}
+            type={resource.resource_type}
+            description={resource.resource_description}
+          />
+        ))}
+      </div>
     </div>
     </section>
   )

@@ -50,7 +50,7 @@ export default async function HomePage() {
   console.log("allResources", allResources)
 
   return (
-    <section className="container mx-auto flex flex-col  space-y-8 md:mt-10 p-6">
+    <section className="min-h-screen container mx-auto flex flex-col  space-y-8 md:mt-10 p-6">
       {/* hero section */}
       <header className="flex flex-col space-y-1">
         <p className="font-bold text-sm text-tertiary">welcome back, <span className="text-primary">Henry</span></p>
