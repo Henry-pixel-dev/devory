@@ -5,6 +5,7 @@ import CollectionCard from "@/components/CollectionCard";
 import { fetchData } from "@/lib/getUser"
 import ResourcesCard from '@/components/ResourcesCard'
 import AddResourceButton from "@/components/AddResourceButton";
+import { getImageUrl } from "@/lib/getImageUrl"
 
 
 function getShuffledArray<T>(array: readonly T[]): T[] {
@@ -42,6 +43,8 @@ export default async function HomePage() {
   
  const allResources = collectionsArray.flatMap((collection) => collection.resources)
  const shuffledResources = getShuffledArray(allResources)
+ const featured = shuffledResources[0]
+ const featuredImage = await getImageUrl(featured?.resource_image ?? null)
 
   console.log("collectionsArray", collectionsArray)
   console.log("allResources", allResources)
@@ -101,16 +104,16 @@ export default async function HomePage() {
           {/* resource, a single interface that show a particular resource  */}
           
            
-           {shuffledResources.slice(0, 1).map((preview, index) => (
-             <div key={index}>
-               <ResourcesCard
-                 image={preview.resource_image}
-                 title={preview.resource_name}
-                 type={preview.resource_type}
-                 description={preview.resource_description}
-               />
-             </div>
-           ))}
+           {featured && (
+            <div>
+              <ResourcesCard
+                image={featuredImage}
+                title={featured.resource_name}
+                type={featured.resource_type}
+                description={featured.resource_description}
+              />
+            </div>
+           )}
           
 
           {/* collections cars */}
