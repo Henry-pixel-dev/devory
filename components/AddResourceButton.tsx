@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import Button from "./SubmitButton";
 import { createClient } from "@/lib/supabase/client"
 
-
+const DEFAULT_IMAGE_PATH = "defaults/logo_transparent-.png" 
 
 export default function AddResourceButton({ children, userId }: { children: React.ReactNode , userId: string }) {
     const [formData, setFormData] = useState({
@@ -23,8 +23,8 @@ export default function AddResourceButton({ children, userId }: { children: Reac
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
     }
     const [loading, setLoading] = useState(false)
-    const DEFAULT_IMAGE_PATH = "https://vhzzsqciskijmlwarnsd.supabase.co/storage/v1/object/public/resource-images/defaults/logo_transparent-.png"
-  
+    
+
     useEffect(() => {
         const urlRegex = /^https?:\/\/([a-z0-9-]+\.)+[a-z]{2,}(:\d+)?([/?#]\S*)?$/i
         
@@ -46,6 +46,7 @@ export default function AddResourceButton({ children, userId }: { children: Reac
         let wanted = true
         setErrors({})
         setPreviewStatus("loading")
+        setFormData((prev) => ({ ...prev, image: "" }))
 
         const timer = setTimeout(async () => {
             try {
@@ -84,21 +85,26 @@ export default function AddResourceButton({ children, userId }: { children: Reac
         setLoading(true)
         let imagePath = DEFAULT_IMAGE_PATH
 
-        try {
-            const res = await fetch("/api/upload-image", {
+
+        if (formData.image) {
+            try {
+                const res = await fetch("/api/upload-image", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ imageUrl: formData.image }),
             })
 
-
-            if (!res.ok) throw new Error("Image upload failed")
-
             if (res.ok) {
                 const { path } = await res.json()
                 imagePath = path
             }
-
+            } catch (error) {
+                console.error("Error uploading image:", error)
+            }
+        }
+        
+        try {
+            
             const supabase = createClient()
             const { error } = await supabase.from("resources").insert({
                 resource_url: formData.url,
@@ -112,10 +118,19 @@ export default function AddResourceButton({ children, userId }: { children: Reac
             if (error) throw error
 
             dialogRef.current?.close()
+            setFormData({
+                url: "",
+                name: "",
+                description: "",
+                type: "",
+                image: "",
+            })
         } catch (error) {
             console.error(error)
+            setErrors({ url: "Failed to create resource. Please try again." })
         } finally {
             setLoading(false)
+
         }
     }
     
@@ -188,19 +203,10 @@ export default function AddResourceButton({ children, userId }: { children: Reac
                     onChange={handleChange}
                     disabled={previewStatus !== "done"}
                     />
-                <Input
-                    id="image"
-                    name="image"
-                    label="Image URL"
-                    type="url"
-                    placeholder="https://example.com/image.jpg"
-                    value={formData.image}
-                    onChange={handleChange}
-                    disabled={previewStatus !== "done"}
-                    />
+                        {/* not needed for display purposes */}
 
-                    <Button disabled={previewStatus !== "done"}>
-                        Create Resource
+                    <Button disabled={previewStatus !== "done" || loading}>
+                        {loading ? "Creating..." : "Create Resource"}
                     </Button>
             </form>
         </div>

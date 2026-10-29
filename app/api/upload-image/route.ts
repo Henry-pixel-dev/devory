@@ -29,6 +29,7 @@ export async function POST(request: Request) {
 
         return Response.json({ path })
     } catch (error) {
+        console.error("upload-image failed:", error)
         return new Response(JSON.stringify({ error: 'Image upload failed' }), { status: 500 });
     }
 
