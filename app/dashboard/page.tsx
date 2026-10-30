@@ -6,6 +6,8 @@ import { fetchData } from "@/lib/getUser"
 import ResourcesCard from '@/components/ResourcesCard'
 import AddResourceButton from "@/components/AddResourceButton";
 import { getImageUrl } from "@/lib/getImageUrl"
+import createCollectionButton from "@/components/CreateCollectionButton";
+import CreateCollectionButton from "@/components/CreateCollectionButton";
 
 
 function getShuffledArray<T>(array: readonly T[]): T[] {
@@ -46,8 +48,11 @@ export default async function HomePage() {
  const featured = shuffledResources[0]
  const featuredImage = await getImageUrl(featured?.resource_image ?? null)
 
-  console.log("collectionsArray", collectionsArray)
-  console.log("allResources", allResources)
+ const resourceOptions = allResources.map((resource) => ({
+    name: resource.resource_name,
+    id: String(resource.id)
+  }))
+  
 
   return (
     <section className="min-h-screen container mx-auto flex flex-col  space-y-8 md:mt-10 p-6">
@@ -63,7 +68,7 @@ export default async function HomePage() {
         {/* card container */}
         <div>
           <h2 className="text-base text-primary font-light md:font-bold mb-3">
-            amadeor
+            Start creating
           </h2>
           <div className="flex flew-wrap space-x-3 items-start overflow-y-auto">
             {/* cards */}
@@ -77,9 +82,14 @@ export default async function HomePage() {
               <p>Create resources</p>
             </div>
             <div className="flex-1 bg-tertiary/30 rounded-lg p-4 min-w-32 h-32 flex flex-col justify-between">
-              <p className=" relative w-9 h-9 bg-background   rounded-full text-2xl font-bold text-primary cursor-pointer  justify-center">
-                <span className=" absolute top-0 left-2.5">+</span>
-              </p>
+              <CreateCollectionButton 
+              userId={user.id}
+              resourceOptions={resourceOptions}
+              >
+                <p className=" relative w-9 h-9 bg-background   rounded-full text-2xl font-bold text-primary cursor-pointer  justify-center">
+                  <span className=" absolute top-0 left-2.5">+</span>
+                </p>
+              </CreateCollectionButton>
               <p>creater  collection</p>
             </div>
             <div className=" flex-1 bg-tertiary/30 rounded-lg p-4 min-w-32 h-32 flex flex-col justify-between">
