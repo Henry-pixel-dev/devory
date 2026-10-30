@@ -8,7 +8,8 @@ import { FiFilter } from 'react-icons/fi'
 import Resource_Fliter from "@/components/Resource_Fliter";
 
 
-export default async function Resources() {
+
+export default async function Resources({searchParams}: {searchParams: Promise<{q?: string, type?: string}>}) {
   const supabase = await createClient()
 
   const { data: {user} } = await supabase.auth.getUser()
@@ -21,12 +22,35 @@ export default async function Resources() {
 
     const allResources = [...uncategorizedResources, ...collectionsArray.flatMap((collection) => collection.resources)]
 
+    
+
+    const { q, type } = await searchParams
+    const query = q?.trim().toLowerCase()
+    const typeFilter = type?.trim().toLowerCase()
+
+    const filteredResources = allResources.filter((resource) => {
+      if (query) {
+        const nameMatch = resource.resource_name?.toLowerCase().includes(query) ?? false
+        const descriptionMatch = resource.resource_description?.toLowerCase().includes(query) ?? false
+        if (!nameMatch && !descriptionMatch) {
+          return false
+        }
+      }
+      if (typeFilter) {
+          if ((resource.resource_type?.toLowerCase() ?? "") !== typeFilter) {
+            return false
+          }
+        }
+      return true
+    })
+
     const resourcesWithImages = await Promise.all(
-      allResources.map(async (resource) => ({
+      filteredResources.map(async (resource) => ({
         ...resource,
         imageUrl: await getImageUrl(resource.resource_image ?? null),
       }))
     )
+    
 
   return (
     <section className="container mx-auto flex flex-col  space-y-8 md:mt-10 p-6 "> 
@@ -49,6 +73,7 @@ export default async function Resources() {
       <h1 className="text-base text-primary font-light md:font-bold md:text-2xl mb-3">
         Resources
       </h1>
+      {resourcesWithImages.length === 0 && <p className="text-2xl text-center">No resources found.</p>}
       <div className="flex flex-col space-y-4 md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {resourcesWithImages.map((resource) => (
           <ResourcesCard

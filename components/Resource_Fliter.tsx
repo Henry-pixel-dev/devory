@@ -2,14 +2,40 @@
 
 import { FiFilter } from "react-icons/fi";
 import Input from "./Input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RadioOption from "./Radio_Input";
+import { useRouter, usePathname, useSearchParams } from "next/navigation"
+
 
 export default function Resource_Fliter() {
-    const [searchTerm, setSearchTerm] = useState("");
+    const pathname = usePathname()          // "/resources"
+    const router = useRouter()
+    const searchParams = useSearchParams()
     const [dateFilter, setDateFilter] = useState("newest");
     const [showFilters, setShowFilters] = useState(false);
+    const [searchTerm, setSearchTerm] = useState(searchParams.get("q") ?? "");
 
+    function updateSearch(value: string) {
+        const params = new URLSearchParams(searchParams.toString())
+        if (value) params.set("q", value)
+        else params.delete("q")
+        router.replace(`${pathname}?${params.toString()}`)
+    }
+
+    useEffect(() => {
+            const timer = setTimeout(() => {
+                const term = searchTerm.trim()
+                if (term === (searchParams.get("q") ?? "")) return
+
+                const params = new URLSearchParams(searchParams.toString())
+                if (searchTerm) params.set("q", searchTerm)
+                else params.delete("q")
+                router.replace(`${pathname}?${params.toString()}`)
+            }, 500)
+ 
+
+        return () => clearTimeout(timer)
+    }, [searchTerm])
 
   return (
     <div className="flex flex-col gap-4">
