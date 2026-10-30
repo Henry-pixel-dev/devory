@@ -9,7 +9,8 @@ import Resource_Fliter from "@/components/Resource_Fliter";
 
 
 
-export default async function Resources({searchParams}: {searchParams: Promise<{q?: string, type?: string}>}) {
+
+export default async function Resources({searchParams}: {searchParams: Promise<{q?: string, type?: string, date?: string}>}) {
   const supabase = await createClient()
 
   const { data: {user} } = await supabase.auth.getUser()
@@ -24,7 +25,7 @@ export default async function Resources({searchParams}: {searchParams: Promise<{
 
     
 
-    const { q, type } = await searchParams
+    const { q, type, date } = await searchParams
     const query = q?.trim().toLowerCase()
     const typeFilter = type?.trim().toLowerCase()
 
@@ -44,8 +45,15 @@ export default async function Resources({searchParams}: {searchParams: Promise<{
       return true
     })
 
+    const sortedResources = [...filteredResources].sort((a, b) => {
+        const dateA = new Date(a.created_at).getTime()
+        const dateB = new Date(b.created_at).getTime()
+
+        return date === "oldest" ? dateA - dateB : dateB - dateA
+      })
+
     const resourcesWithImages = await Promise.all(
-      filteredResources.map(async (resource) => ({
+      sortedResources.map(async (resource) => ({
         ...resource,
         imageUrl: await getImageUrl(resource.resource_image ?? null),
       }))

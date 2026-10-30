@@ -11,16 +11,10 @@ export default function Resource_Fliter() {
     const pathname = usePathname()          // "/resources"
     const router = useRouter()
     const searchParams = useSearchParams()
-    const [dateFilter, setDateFilter] = useState("newest");
+    const [dateFilter, setDateFilter] = useState(searchParams.get("date") ?? "newest");
     const [showFilters, setShowFilters] = useState(false);
     const [searchTerm, setSearchTerm] = useState(searchParams.get("q") ?? "");
 
-    function updateSearch(value: string) {
-        const params = new URLSearchParams(searchParams.toString())
-        if (value) params.set("q", value)
-        else params.delete("q")
-        router.replace(`${pathname}?${params.toString()}`)
-    }
 
     useEffect(() => {
             const timer = setTimeout(() => {
@@ -28,14 +22,25 @@ export default function Resource_Fliter() {
                 if (term === (searchParams.get("q") ?? "")) return
 
                 const params = new URLSearchParams(searchParams.toString())
-                if (searchTerm) params.set("q", searchTerm)
+                if (term) params.set("q", term)
                 else params.delete("q")
-                router.replace(`${pathname}?${params.toString()}`)
+                const qs = params.toString()
+                router.replace(qs ? `${pathname}?${qs}` : pathname)
             }, 500)
  
 
         return () => clearTimeout(timer)
     }, [searchTerm])
+
+    const handleDateFilterChange = (value: string) => {
+        setDateFilter(value);
+
+        const params = new URLSearchParams(searchParams.toString())
+        if (value) params.set("date", value)
+        else params.delete("date")
+        const qs = params.toString()
+        router.replace(qs ? `${pathname}?${qs}` : pathname)
+    }
 
   return (
     <div className="flex flex-col gap-4">
@@ -69,14 +74,14 @@ export default function Resource_Fliter() {
                         value="newest"
                         label="Newest"
                         checked={dateFilter === "newest"}
-                        onChange={() => setDateFilter("newest")}
+                        onChange={() => handleDateFilterChange("newest")}
                     />
                     <RadioOption
                         name="date"
                         value="oldest"
                         label="Oldest"
                         checked={dateFilter === "oldest"}
-                        onChange={() => setDateFilter("oldest")}
+                        onChange={() => handleDateFilterChange("oldest")}
                     />
                 </fieldset>
             </div>

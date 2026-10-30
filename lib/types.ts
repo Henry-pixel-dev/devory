@@ -6,6 +6,7 @@
         resource_image: string
         resource_description: string;
         is_favorite: boolean;
+        created_at: string;
     };
 
 
