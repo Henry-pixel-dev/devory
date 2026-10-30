@@ -11,17 +11,18 @@ type InputProps = {
   id: string;
   name: string;
   label: string;
-  type?: "text" | "email" | "password" | "url";
+  type?: "text" | "email" | "password" | "url" | "search";
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   errors?: string;
   apierrors?: string;
   disabled?: boolean;
+  hideLabel?: boolean;
 };
 
 export default function Input({
-  id, name, label, type = "text", placeholder, value, onChange, errors, apierrors, disabled,
+  id, name, label, type = "text", placeholder, value, onChange, errors, apierrors, disabled, hideLabel
 }: InputProps) {
 
 
@@ -32,7 +33,7 @@ export default function Input({
       <div className="w-full flex justify-between">
         <label
           htmlFor={id}
-          className="text-xs font-medium uppercase tracking-wide text-foreground/70"
+          className={hideLabel ? "sr-only" : "text-xs font-medium uppercase tracking-wide text-foreground/70"}
         >
           {label}
         </label>
