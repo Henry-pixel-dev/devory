@@ -86,10 +86,12 @@ export default async function Resources({searchParams}: {searchParams: Promise<{
         {resourcesWithImages.map((resource) => (
           <ResourcesCard
             key={resource.id}
+            id={Number(resource.id)}
             image={resource.imageUrl}
             title={resource.resource_name}
             type={resource.resource_type}
             description={resource.resource_description}
+            url={resource.resource_url}
           />
         ))}
       </div>

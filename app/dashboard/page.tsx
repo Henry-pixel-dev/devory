@@ -119,10 +119,12 @@ export default async function HomePage() {
            {featured && (
             <div>
               <ResourcesCard
+                id={Number(featured.id)}
                 image={featuredImage}
                 title={featured.resource_name}
                 type={featured.resource_type}
                 description={featured.resource_description}
+                url={featured.resource_url}
               />
             </div>
            )}
