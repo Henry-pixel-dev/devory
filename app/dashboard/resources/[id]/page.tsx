@@ -3,6 +3,7 @@ import { createClient } from "@/lib/supabase/server"
 import { redirect, notFound } from "next/navigation"
 import { getImageUrl } from "@/lib/getImageUrl"
 import Image from "next/image";
+import EditnDelete from "@/components/EditnDelete";
 
 
 
@@ -34,9 +35,11 @@ export default async function Resource({ params }: { params: Promise<{ id: strin
   return (
     <section className="min-h-screen container mx-auto flex flex-col items-center space-y-8 md:mt-10 p-6">
         {/* edit and delete buttons */}
-
-      <div className="bg-primary/10 w-full flex-1 flex flex-row space-x-3 p-3  items-center  md:max-w-80 rounded-2xl  md:flex-col md:space-y-4">
-        <div className="relative h-24 w-24 shrink-0 md:h-32 md:w-full ">
+        <div className="w-full flex justify-end">
+            <EditnDelete />
+        </div>
+      <div className="bg-primary/10 w-full flex-1 flex  space-x-3 p-3  items-center  md:max-w-80 rounded-2xl  flex-col space-y-4">
+        <div className="relative h-24 w-60 shrink-0 md:h-32 md:w-full  ">
             <Image
                 src={imageUrl}
                 fill
@@ -56,7 +59,7 @@ export default async function Resource({ params }: { params: Promise<{ id: strin
               {resource.resource_description}
             </p>
         </div>
-        <div className="hidden md:block md:text-base text-primary backdrop:blur-sm bg-tertiary/30 rounded-lg p-2 self-end ">
+        <div className="text-base text-primary backdrop:blur-sm bg-tertiary/30 rounded-lg p-2 self-end ">
             <a href={resource.resource_url} target="_blank" rel="noopener noreferrer" className="cursor-pointer ">
                 <p className="text-primary text-sm underline">Visit</p>                    
             </a>
