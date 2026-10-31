@@ -14,10 +14,12 @@
  export  type CollectionWithResources = {
         id: number;
         collection_name: string;
+        created_at: string;
         resources: Resource[];
     };
 
 export type UserData = {
   collections: CollectionWithResources[];
   uncategorizedResources: Resource[];
+  resources: Resource[]; 
 };

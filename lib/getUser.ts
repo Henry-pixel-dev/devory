@@ -13,7 +13,7 @@ export async function fetchData(): Promise<UserData> {
     const supabase = await createClient()
 
     const [collectionsRes, resourcesRes, linksRes] = await Promise.all([
-      supabase.from("collections").select("id, collection_name"),
+      supabase.from("collections").select("id, collection_name, created_at"),
       supabase.from("resources").select("id, resource_name, resource_url, resource_description, resource_type, resource_image, is_favorite, created_at"),
       supabase.from("collection_resources").select("collection_id, resource_id"),
     ])
@@ -41,6 +41,7 @@ export async function fetchData(): Promise<UserData> {
         return {
           id: collection.id,
           collection_name: collection.collection_name,
+          created_at: collection.created_at,
           resources: collectionResources,
         };
     }) ?? []; 
@@ -55,5 +56,5 @@ export async function fetchData(): Promise<UserData> {
   ) ?? [];
 
 
-    return { collections: collectionsArray, uncategorizedResources }
+    return { collections: collectionsArray, uncategorizedResources, resources  }
 }

@@ -40,15 +40,17 @@ export default async function HomePage() {
     }
   }
 
-  const { collections: collectionsArray } = await fetchData()
+  const { collections: collectionsArray, resources } = await fetchData()
  
   
  const allResources = collectionsArray.flatMap((collection) => collection.resources)
+
+
  const shuffledResources = getShuffledArray(allResources)
  const featured = shuffledResources[0]
  const featuredImage = await getImageUrl(featured?.resource_image ?? null)
-
- const resourceOptions = allResources.map((resource) => ({
+  
+ const resourceOptions = resources.map((resource) => ({
     name: resource.resource_name,
     id: String(resource.id)
   }))

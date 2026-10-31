@@ -5,7 +5,7 @@ import ResourcesCard from "@/components/ResourcesCard";
 import { getImageUrl } from "@/lib/getImageUrl";
 import AddResourceButton from "@/components/AddResourceButton";
 import { FiFilter } from 'react-icons/fi'
-import Resource_Fliter from "@/components/Resource_Fliter";
+import FliterSearch from "@/components/FliterSearch";
 
 
 
@@ -19,9 +19,9 @@ export default async function Resources({searchParams}: {searchParams: Promise<{
     redirect("/signin")
   }
 
-  const { collections: collectionsArray, uncategorizedResources } = await fetchData()
+  const { collections: collectionsArray, resources } = await fetchData()
 
-    const allResources = [...uncategorizedResources, ...collectionsArray.flatMap((collection) => collection.resources)]
+    
 
     
 
@@ -29,7 +29,7 @@ export default async function Resources({searchParams}: {searchParams: Promise<{
     const query = q?.trim().toLowerCase()
     const typeFilter = type?.trim().toLowerCase()
 
-    const filteredResources = allResources.filter((resource) => {
+    const filteredResources = resources.filter((resource) => {
       if (query) {
         const nameMatch = resource.resource_name?.toLowerCase().includes(query) ?? false
         const descriptionMatch = resource.resource_description?.toLowerCase().includes(query) ?? false
@@ -73,7 +73,7 @@ export default async function Resources({searchParams}: {searchParams: Promise<{
       </div>
 
       {/* convert to a fliter button  seperate component client side */}
-      <Resource_Fliter />
+      <FliterSearch />
 
     </div>
 
