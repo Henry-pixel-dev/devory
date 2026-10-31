@@ -5,10 +5,13 @@ import Input from "./Input";
 import { useState, useEffect } from "react";
 import Button from "./SubmitButton";
 import { createClient } from "@/lib/supabase/client"
+import { useRouter } from "next/navigation";
+
 
 const DEFAULT_IMAGE_PATH = "defaults/logo_transparent-.png" 
 
 export default function AddResourceButton({ children, userId }: { children: React.ReactNode , userId: string }) {
+    const router = useRouter()
     const [formData, setFormData] = useState({
         url: "",
         name: "",
@@ -125,6 +128,7 @@ export default function AddResourceButton({ children, userId }: { children: Reac
                 type: "",
                 image: "",
             })
+            router.refresh()
         } catch (error) {
             console.error(error)
             setErrors({ url: "Failed to create resource. Please try again." })
