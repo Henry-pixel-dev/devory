@@ -78,7 +78,7 @@ export default async function Collections({searchParams}: {searchParams: Promise
           <div className="w-full  grid grid-cols-1 grid-rows-1 sm:grid-cols-2 sm:grid-rows-2 md:grid-cols-3 md:grid-rows-3 gap-4">
             {sortedCollections.map((collection) => (
               <div key={collection.id}>
-                {CollectionCard(collection.collection_name)}
+                {CollectionCard({ collectionName: collection.collection_name, collectionId: collection.id })}
               </div>
             ))}
           </div>

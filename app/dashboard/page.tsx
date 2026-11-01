@@ -119,12 +119,14 @@ export default async function HomePage() {
            {featured && (
             <div>
               <ResourcesCard
+                userid={user.id}
                 id={Number(featured.id)}
                 image={featuredImage}
                 title={featured.resource_name}
                 type={featured.resource_type}
                 description={featured.resource_description}
                 url={featured.resource_url}
+                is_favorite={featured.is_favorite}
               />
             </div>
            )}
@@ -136,7 +138,7 @@ export default async function HomePage() {
             <div className="flex flex-col md:grid md:grid-cols-2 md:grid-rows-2 gap-4">
               {collectionsArray.slice(0, 4).map((collection) => (
                 <div key={collection.id}>
-                  {CollectionCard(collection.collection_name)}
+                  {CollectionCard({ collectionName: collection.collection_name, collectionId: collection.id })}
                 </div>
               ))}
             </div>

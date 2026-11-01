@@ -85,6 +85,7 @@ export default async function Resources({searchParams}: {searchParams: Promise<{
       <div className="flex flex-col space-y-4 md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {resourcesWithImages.map((resource) => (
           <ResourcesCard
+            userid={user.id}
             key={resource.id}
             id={Number(resource.id)}
             image={resource.imageUrl}
@@ -92,6 +93,7 @@ export default async function Resources({searchParams}: {searchParams: Promise<{
             type={resource.resource_type}
             description={resource.resource_description}
             url={resource.resource_url}
+            is_favorite={resource.is_favorite}
           />
         ))}
       </div>
