@@ -20,7 +20,7 @@ export default function HamburgerBtn() {
       <div className="absolute top-full left-4 w-full z-50 bg-background  ">
         {isOpen && (
           <div className="w-full min-h-screen flex flex-col items-center">
-            <SideBar />
+            <SideBar onLinkClick={() => setIsOpen(false)}/>
             <div className=" w-full h-full flex items-end justify-end pb-6 pr-3">
               <SignOutBtn />
           </div>

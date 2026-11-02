@@ -14,7 +14,7 @@ export default async function page() {
   return (
     <div className="rounded-[40px] pt-20 pb-12.5 max-w-93.75 w-[80%] mx-auto desk:p-0 desk:my-12 desk:mr-auto desk:ml-60 ">
           <div className="rounded-[inherit] p-2 ">
-            <div className="rounded-[40px] bg-tertiary/20 max-w-93.75 w-full border border-red-600">
+            <div className="rounded-[40px] bg-tertiary/20 max-w-93.75 w-full border border-gray-600">
               {/* Header */}
               <header className="bg-[linear-gradient(to_right,#9f9cf2,#05033a)] text-white rounded-t-[40px] rounded-b-2xl px-4 pb-4">
                 {/* design */}
