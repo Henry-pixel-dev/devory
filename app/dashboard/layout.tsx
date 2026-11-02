@@ -55,7 +55,7 @@ export default function DashBoardLayout( {children} : { children : React.ReactNo
         aria-label="Open Roadmapper"
         title="Roadmapper"
         className="fixed bottom-20 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/85 md:bottom-6 md:right-6"
-        href="dashboard/roadmaps"
+        href="/dashboard/roadmaps"
         >
             <LuBot size={22} />
         </Link>
