@@ -30,7 +30,7 @@ export default function DashBoardLayout( {children} : { children : React.ReactNo
         </Link>
           </header>
           <SideBar />
-          <div className=" w-full h-full flex items-end justify-end pb-24 pr-3">
+          <div className=" w-full h-full flex items-end justify-end pb-6 pr-3">
               <SignOutBtn />
           </div>
       </aside>

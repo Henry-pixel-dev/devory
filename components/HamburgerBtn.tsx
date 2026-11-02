@@ -21,7 +21,7 @@ export default function HamburgerBtn() {
         {isOpen && (
           <div className="w-full min-h-screen flex flex-col items-center">
             <SideBar />
-            <div className=" w-full h-full flex items-end justify-end pb-24 pr-3">
+            <div className=" w-full h-full flex items-end justify-end pb-6 pr-3">
               <SignOutBtn />
           </div>
           </div>
