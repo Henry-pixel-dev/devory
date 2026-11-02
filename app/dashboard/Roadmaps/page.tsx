@@ -1,7 +1,16 @@
 import ChatBody from "@/components/ChatBody";
+import { getUser } from "@/lib/getUser";
 import Image from "next/image";
+import { redirect } from "next/navigation"
 
-export default function page() {
+export default async function page() {
+
+  const user = await getUser()
+
+  if (!user) {
+    redirect("/signin")
+  }
+
   return (
     <div className="rounded-[40px] pt-20 pb-12.5 max-w-93.75 w-[80%] mx-auto desk:p-0 desk:my-12 desk:mr-auto desk:ml-60 ">
           <div className="rounded-[inherit] p-2 ">
