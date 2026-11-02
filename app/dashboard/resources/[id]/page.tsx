@@ -4,6 +4,7 @@ import { redirect, notFound } from "next/navigation"
 import { getImageUrl } from "@/lib/getImageUrl"
 import Image from "next/image";
 import EditnDelete from "@/components/EditnDelete";
+import IsFavoriteButton from "@/components/IsFavoriteButton";
 
 
 
@@ -62,11 +63,14 @@ export default async function Resource({ params }: { params: Promise<{ id: strin
                 {resource.resource_type}
             </p>
         </div>
-        <div className="text-base text-primary backdrop:blur-sm bg-tertiary/30 rounded-lg p-2 self-end ">
-            <a href={resource.resource_url} target="_blank" rel="noopener noreferrer" className="cursor-pointer ">
-                <p className="text-primary text-sm underline">Visit</p>                    
-            </a>
-         </div>
+        <div className="flex flex-row-reverse justify-between w-full items-center">
+            <div className="text-base text-primary backdrop:blur-sm bg-tertiary/30 rounded-lg p-2 self-end ">
+                <a href={resource.resource_url} target="_blank" rel="noopener noreferrer" className="cursor-pointer ">
+                    <p className="text-primary text-sm underline">Visit</p>
+                </a>
+             </div>
+             <IsFavoriteButton is_favorite={resource.is_favorite} userid={user.id} resourceid={resource.id} />
+        </div>
     </div>
     </section>
   )
