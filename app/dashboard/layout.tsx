@@ -6,6 +6,7 @@ import { FiHome, FiLink, FiLayers, FiStar } from "react-icons/fi";
 import FooterBtn from "@/components/FooterBtn";
 import SideBar from "@/components/SideBar";
 import SignOutBtn from "@/components/SIgnOutBtn";
+import { LuBot } from "react-icons/lu";
 
 
 export default function DashBoardLayout( {children} : { children : React.ReactNode } ) {
@@ -50,6 +51,14 @@ export default function DashBoardLayout( {children} : { children : React.ReactNo
       <section className="min-h-screen w-full flex flex-col items-start ">
         {children}
       </section>
+      <Link
+        aria-label="Open Roadmapper"
+        title="Roadmapper"
+        className="fixed bottom-20 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg hover:bg-primary/85 md:bottom-6 md:right-6"
+        href="dashboard/roadmaps"
+        >
+            <LuBot size={22} />
+        </Link>
 
       <footer className="bg-background fixed bottom-0 left-0 w-full p-3 flex flex-row justify-between z-50 md:hidden">
         <FooterBtn href="/dashboard" icon={FiHome}>
