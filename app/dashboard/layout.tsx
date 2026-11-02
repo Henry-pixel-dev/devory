@@ -4,6 +4,8 @@ import dlogo from  "@/public/Dlogo.png"
 import HamburgerBtn from "@/components/HamburgerBtn";
 import { FiHome, FiLink, FiLayers, FiStar } from "react-icons/fi";
 import FooterBtn from "@/components/FooterBtn";
+import SideBar from "@/components/SideBar";
+import SignOutBtn from "@/components/SIgnOutBtn";
 
 
 export default function DashBoardLayout( {children} : { children : React.ReactNode } ) {
@@ -26,37 +28,15 @@ export default function DashBoardLayout( {children} : { children : React.ReactNo
             </p>
         </Link>
           </header>
-          <ul className="flex flex-col space-y-3">
-              <li className="py-3 px-6  rounded-md
-              hover:bg-secondary hover:border-b cursor-pointer">
-                  <Link href="/dashboard" className="w-full text-bold">
-                      Dashboard
-                  </Link>
-              </li> 
-              <li className="py-3 px-6  rounded-md text-primary
-              hover:bg-secondary hover:border-b cursor-pointer">
-                  <Link href="/dashboard/resources" className="w-full text-bold">
-                      Resources
-                  </Link>
-              </li> 
-              <li className="py-3 px-6  rounded-md
-              hover:bg-secondary hover:border-b cursor-pointer">
-                  <Link href="/dashboard/collections" className="w-full text-bold">
-                      Collections
-                  </Link>
-              </li> 
-              <li className="py-3 px-6  rounded-md
-              hover:bg-secondary hover:border-b cursor-pointer">
-                  <Link href="/dashboard/favorite" className="w-full text-bold">
-                      Favorite
-                  </Link>
-              </li> 
-          </ul>
+          <SideBar />
+          <div className=" w-full h-full flex items-end justify-end pb-24 pr-3">
+              <SignOutBtn />
+          </div>
       </aside>
 
-      <nav className="w-full flex justify-between p-6 md:hidden">
+      <nav className="w-full flex justify-between mt-6 md:hidden">
         <HamburgerBtn />
-        <Link href="/profile" className="flex items-center">
+        <Link href="/profile" className="flex items-center pr-6 ">
           <Image
             src={dlogo}
             alt="Devory Logo"
