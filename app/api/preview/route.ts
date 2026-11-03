@@ -13,6 +13,9 @@ export async function GET(request: Request) {
     console.log("preview:", url, response.status, response.url)
     const html = await response.text();
     const $ = cheerio.load(html);
+    console.log("html length:", html.length)
+    console.log("og:title:", $('meta[property="og:title"]').attr('content'))
+    console.log("title tag:", $('title').text())
 
     const title =
         $('meta[property="og:title"]').attr('content') || $('title').text();
