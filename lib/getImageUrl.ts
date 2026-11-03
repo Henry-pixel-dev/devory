@@ -1,7 +1,7 @@
 // lib/getImageUrl.ts
 import { createClient } from "./supabase/server"
 
-const DEFAULT_IMAGE_PATH = "defaults/logo_transparent-.png"
+const DEFAULT_IMAGE_PATH = "defaults/placeholder.png"
 
 export async function getImageUrl(value: string | null) {
     // old rows that already hold a usable address

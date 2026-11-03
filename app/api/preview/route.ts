@@ -18,7 +18,6 @@ export async function GET(request: Request) {
         try {
             const oembedUrl = `https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`
             const oembedRes = await fetch(oembedUrl)
-            console.log("oembed status:", oembedRes.status)
 
             if (oembedRes.ok) {
                 const oembed = await oembedRes.json()
@@ -40,7 +39,6 @@ export async function GET(request: Request) {
 
     
     const response = await fetch(url);
-    console.log("preview:", url, response.status, response.url)
     const html = await response.text();
     const $ = cheerio.load(html);
     

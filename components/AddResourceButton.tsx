@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation";
 
 
-const DEFAULT_IMAGE_PATH = "defaults/logo_transparent-.png" 
+const DEFAULT_IMAGE_PATH = "defaults/placeholder.png"
 
 export default function AddResourceButton({ children, userId }: { children: React.ReactNode , userId: string }) {
     const router = useRouter()
