@@ -10,6 +10,7 @@ export async function GET(request: Request) {
 
     
     const response = await fetch(url);
+    console.log("preview:", url, response.status, response.url)
     const html = await response.text();
     const $ = cheerio.load(html);
 

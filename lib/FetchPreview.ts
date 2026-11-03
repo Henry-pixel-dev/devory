@@ -13,6 +13,7 @@ export async function fetchPreviews(url : string) {
         $('meta[name="description"]').attr('content') || 
         'No description available';
     const image = $('meta[property="og:image"]').attr('content') || './logo_transparent-.png';
+    
 
 
   return  { title, description, image, author: "Unknown" }
