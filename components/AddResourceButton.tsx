@@ -108,27 +108,40 @@ export default function AddResourceButton({ children, userId }: { children: Reac
         
         try {
             
-            const supabase = createClient()
-            const { error } = await supabase.from("resources").insert({
-                resource_url: formData.url,
-                resource_name: formData.name,
-                resource_description: formData.description,
-                resource_type: formData.type,
-                resource_image: imagePath,
-                user_id: userId,
-            })
+            
 
-            if (error) throw error
+            const res = await fetch("/api/resources", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    url: formData.url,
+                    name: formData.name,
+                    description: formData.description,
+                    type: formData.type,
+                    image: imagePath,
+                }),
+                })
+                const data = await res.json()
 
-            dialogRef.current?.close()
-            setFormData({
-                url: "",
-                name: "",
-                description: "",
-                type: "",
-                image: "",
-            })
-            router.refresh()
+                if (res.status === 403 && data.error === "limit_reached") {
+                dialogRef.current?.close()
+                // open the upgrade popup here (next step)
+                router.push("?upgrade=true");
+                console.log("Limit reached. Please upgrade your plan to add more resources.")
+                return
+                }
+                if (res.status === 409) { console.log("You've already saved this link."); return } //setApiError
+                if (!res.ok) { console.log("Something went wrong. Please try again."); return } //setApiError
+
+                dialogRef.current?.close()
+                setFormData({
+                    url: "",
+                    name: "",
+                    description: "",
+                    type: "",
+                    image: "",
+                })
+                router.refresh()
         } catch (error) {
             console.error(error)
             setErrors({ url: "Failed to create resource. Please try again." })

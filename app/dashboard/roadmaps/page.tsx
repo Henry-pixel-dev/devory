@@ -3,6 +3,7 @@ import { getUser } from "@/lib/getUser";
 import Image from "next/image";
 import { redirect } from "next/navigation"
 
+
 export default async function page() {
 
   const user = await getUser()
@@ -42,7 +43,7 @@ export default async function page() {
                 </div>
               </header>
               {/* scrollable area */}
-              <ChatBody />
+              <ChatBody userId={user.id} />
             </div>
           </div>
         </div>

@@ -8,6 +8,8 @@ import AddResourceButton from "@/components/AddResourceButton";
 import { getImageUrl } from "@/lib/getImageUrl"
 import createCollectionButton from "@/components/CreateCollectionButton";
 import CreateCollectionButton from "@/components/CreateCollectionButton";
+import PayButton from "@/components/PayButton";
+import Link from "next/link";
 
 
 function getShuffledArray<T>(array: readonly T[]): T[] {
@@ -28,6 +30,7 @@ export default async function HomePage() {
   if (!user) {
     redirect("/signin")
   }
+
   
   if (!user.user_metadata?.seeded) {
     try {
@@ -60,7 +63,7 @@ export default async function HomePage() {
     <section className="min-h-screen container mx-auto flex flex-col  space-y-8 md:mt-10 p-6">
       {/* hero section */}
       <header className="flex flex-col space-y-1">
-        <p className="font-bold text-sm text-tertiary">welcome back, <span className="text-primary">Henry</span></p>
+        <p className="font-bold text-sm text-tertiary">welcome back, <span className="text-primary"></span></p>
         <h1 className="text-2xl text-primary font-light md:font-bold">
           Your Dashboard
         </h1>
@@ -95,18 +98,13 @@ export default async function HomePage() {
               <p>creater  collection</p>
             </div>
             <div className=" flex-1 bg-tertiary/30 rounded-lg p-4 min-w-32 h-32 flex flex-col justify-between">
-              <p className=" relative w-9 h-9 bg-background   rounded-full text-2xl font-bold text-primary cursor-pointer  justify-center">
-                <span className=" absolute top-0 left-2.5">+</span>
-              </p>
+              <Link href="/dashboard/collections?upgrade=true" className="btn">
+                <p className=" relative w-9 h-9 bg-background   rounded-full text-2xl font-bold text-primary cursor-pointer  justify-center">
+                  <span className=" absolute top-0 left-2.5">+</span>
+                </p>
+              </Link>
 
-              <p>create Projects</p>
-            </div>
-            <div className=" flex-1 bg-tertiary/30 rounded-lg p-4 min-w-32 h-32 flex flex-col justify-between">
-              <p className=" relative w-9 h-9 bg-background   rounded-full text-2xl font-bold text-primary cursor-pointer  justify-center">
-                <span className=" absolute top-0 left-2.5">+</span>
-              </p>
-
-              <p>create Challenges</p>
+              <p>create Projects </p>
             </div>
           </div>
         </div>

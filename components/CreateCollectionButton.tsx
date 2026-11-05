@@ -7,6 +7,8 @@ import Button from "./SubmitButton";
 import { createClient } from "@/lib/supabase/client"
 import { fetchData } from "@/lib/getUser"
 import {  FaChevronDown, FaChevronRight } from 'react-icons/fa6'
+import { useRouter } from "next/navigation";
+
 
 type ResourceOption = {
   name: string
@@ -21,6 +23,7 @@ type Props = {
 
 
 export default  function CreateCollectionButton({children, userId, resourceOptions}: Props) {
+    const router = useRouter()
     
     
 
@@ -51,36 +54,30 @@ export default  function CreateCollectionButton({children, userId, resourceOptio
         e.preventDefault()
         setLoading(true)
         try {
-            const supabase = createClient()
-            const { data: collection, error } = await supabase
-                .from('collections')
-                .insert({
-                    collection_name: formData.name,
-                    user_id: userId,
+           
+
+            const res = await fetch("/api/collections", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    name: formData.name,
+                    resourceIds: formData.collectionIds.map((id) => parseInt(id, 10)), // Convert string IDs to numbers
+                }),
                 })
-                .select()
-                .single()
+                const data = await res.json()
 
-            if (error || !collection) throw error
-            console.log(collection)
-
-            if (formData.collectionIds.length > 0) {
-                const { data: collectionResources, error: collectionResourcesError } = await supabase
-                    .from('collection_resources')
-                    .insert(
-                        formData.collectionIds.map((resourceId) => ({
-                            collection_id: collection.id,
-                            resource_id: resourceId,
-                        }))
-                    )
-
-                if (collectionResourcesError) throw collectionResourcesError
-                console.log(collectionResources)
+                if (res.status === 403 && data.error === "limit_reached") {
+                dialogRef.current?.close()
+                // open the upgrade popup here (next step)
+                router.push("?upgrade=true");
+                console.log("Limit reached. Please upgrade your plan to add more collections.")
+                return
+                }
+                if (res.status === 409) { console.log("You've already saved this link."); return }
+                if (!res.ok) { console.log("Something went wrong. Please try again."); return }
 
                 dialogRef.current?.close()
-                setOpen(false)  // Close the dropdown when the dialog is closed
-                setFormData({ name: "", collectionIds: [] })  // Reset form data when the dialog is closed
-            }
+                router.refresh()
         } catch (error) {
             console.error(error)
         } finally {

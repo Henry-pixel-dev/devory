@@ -7,11 +7,14 @@ import FooterBtn from "@/components/FooterBtn";
 import SideBar from "@/components/SideBar";
 import SignOutBtn from "@/components/SIgnOutBtn";
 import { LuBot } from "react-icons/lu";
+import PoppUp from "@/components/PoppUp";
+import { Suspense } from "react";
+import PaymentModal from "@/components/PaymentModal";
 
 
 export default function DashBoardLayout( {children} : { children : React.ReactNode } ) {
   return (
-    <main className="w-full h-full flex flex-col md:flex-row  ">
+    <main className="relative w-full h-full flex flex-col md:flex-row  ">
         
         <aside className="hidden md:flex md:flex-col w-sm md:w-64 min-h-screen  border-r ">
           <header className="mb-6 px-6 py-3">
@@ -60,6 +63,10 @@ export default function DashBoardLayout( {children} : { children : React.ReactNo
             <LuBot size={22} />
         </Link>
 
+      <Suspense fallback={null}>
+        <PoppUp />
+        <PaymentModal />
+      </Suspense>
       <footer className="bg-background fixed bottom-0 left-0 w-full p-3 flex flex-row justify-between z-50 md:hidden">
         <FooterBtn href="/dashboard" icon={FiHome}>
             Dashboard
@@ -74,6 +81,7 @@ export default function DashBoardLayout( {children} : { children : React.ReactNo
             Favorite
         </FooterBtn>
       </footer>
+      
     </main>
   )
 }
